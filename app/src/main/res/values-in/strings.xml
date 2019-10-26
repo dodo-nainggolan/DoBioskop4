@@ -1,0 +1,93 @@
+<resources>
+    <string name = "app_name"> DoBioskop2 </string>
+    <string name = "title_home"> FILM </string>
+    <string name = "title_dashboard"> SIARAN TV </string>
+    <string name = "title_notifications"> Pemberitahuan </string>
+    <string name = "menu_movies"> FILM </string>
+    <string name = "menu_tv_shows"> SIARAN TV </string>
+    <string name = "title_tv_shows"> SIARAN TV </string>
+    <string name = "title_movies"> FILM </string>
+    <string name = "judul_film"> Judul Film </string>
+    <string name = "deksripsi_film"> Deskripsi Film </string>
+    <string name = "rilis"> Rilis Film </string>
+
+    <string-array name="nama_film">
+        <item>Avengers: Infinity War (2018)</item>
+        <item>Aquaman (2018)</item>
+        <item>A Star Is Born (2018)</item>
+        <item>Venom (2018)</item>
+        <item>Bumblebee (2018)</item>
+        <item>Bohemian Rhapsody (2018)</item>
+        <item>How to Train Your Dragon : The Hidden World (2019)</item>
+        <item>Deadpool 2 (2018)</item>
+        <item>Glass (2019)</item>
+        <item>Spider-man: Into the Spider-Verse (2018)</item>
+    </string-array>
+    <array name="data_foto">
+        <item>@drawable/poster_avengerinfinity</item>
+        <item>@drawable/poster_aquaman</item>
+        <item>@drawable/poster_a_star</item>
+        <item>@drawable/poster_venom</item>
+        <item>@drawable/poster_bumblebee</item>
+        <item>@drawable/poster_bohemian</item>
+        <item>@drawable/poster_dragon</item>
+        <item>@drawable/poster_deadpool</item>
+        <item>@drawable/poster_glass</item>
+        <item>@drawable/poster_spiderman</item>
+    </array>
+
+
+    <string-array name = "rilis_film">
+        <item> 23 April 2018 </item>
+        <item> 21 Desember 2018 </item>
+        <item> 5 Oktober 2018 </item>
+        <item> 1 Oktober 2018 </item>
+        <item> 21 Desember 2018 </item>
+        <item> 30 Oktober 2018 </item>
+        <item> 22 Februari 2019 </item>
+        <item> 10 Mei 2018 </item>
+        <item> 18 Januari 2019 </item>
+        <item> 1 Desember 2018 </item>
+
+    </string-array>
+    <string-array name = "deskripsi_film">
+        <item> Saat Avengers dan sekutu mereka terus melindungi dunia dari ancaman yang terlalu besar
+            untuk ditangani oleh satu pahlawan, bahaya baru telah muncul dari bayang-bayang kosmik: Thanos. Seorang lalim
+            keburukan intergalaksi, tujuannya adalah untuk mengumpulkan semua enam Batu Infinity, artefak yang tak terbayangkan
+            kekuatan, dan menggunakannya untuk menimbulkan keinginan bengkok pada semua kenyataan. Semua yang Avengers telah perjuangkan
+            karena telah mengarah ke saat ini - nasib Bumi dan keberadaannya sendiri tidak pernah lebih tidak pasti. </item>
+        <item> Setelah menjadi rumah bagi peradaban paling maju di Bumi, Atlantis sekarang merupakan kerajaan bawah laut yang diperintah oleh
+            Raja Orm yang haus kekuasaan. Dengan pasukan yang sangat besar, Orm berencana untuk menaklukkan orang-orang samudera yang tersisa
+            dan kemudian dunia permukaan. Berdiri di jalannya adalah Arthur Curry, setengah manusia, setengah Atlantis
+            saudara dan pewaris sejati takhta. </item>
+        <item> Musisi kawakan Jackson Maine menemukan - dan jatuh cinta dengan - artis yang sedang berjuang Ally.
+            Dia baru saja menyerah pada mimpinya untuk menjadi besar sebagai penyanyi - sampai Jack membujuknya menjadi sorotan.
+            Tetapi bahkan ketika karir Ally lepas landas, sisi pribadi dari hubungan mereka rusak,
+            saat Jack bertempur dengan iblis internalnya sendiri. </item>
+        <item> Wartawan investigasi Eddie Brock mencoba kembali setelah skandal, tetapi secara tidak sengaja menjadi tuan rumah
+            Venom, seorang simbiot alien yang sangat kuat dan sakti. Segera, ia harus mengandalkan kekuatan yang baru ditemukannya untuk melindungi dunia
+            dari organisasi bayangan mencari symbiote mereka sendiri. </item>
+        <item> Dalam pelarian pada tahun 1987, Bumblebee menemukan perlindungan di tempat barang rongsokan di kota pantai kecil California.
+            Charlie, di puncak usia 18 dan mencoba menemukan tempatnya di dunia, menemukan Bumblebee,
+            pertempuran-bekas luka dan rusak. Ketika Charlie membangkitkannya, dia dengan cepat mengetahui bahwa ini bukan bug VW kuning biasa. </item>
+
+        <item> Penyanyi Freddie Mercury, gitaris Brian May, drummer Roger Taylor dan gitaris bass John Deacon ambil
+            dunia musik oleh badai ketika mereka membentuk band rock Queen Rock pada tahun 1970. Lagu-lagu hit menjadi klasik instan.
+            Ketika gaya hidup Mercury yang semakin liar mulai lepas kendali, Queen segera menghadapi tantangan terbesarnya
+            Belum - menemukan cara untuk menjaga band bersama di tengah kesuksesan dan kelebihan. </item>
+        <item> Saat Hiccup memenuhi mimpinya untuk menciptakan utopia naga yang damai, penemuan Toothless ’yang liar,
+            pasangan yang sulit ditangkap menarik Night Fury. Ketika bahaya meningkat di rumah dan pemerintahan Hiccup sebagai kepala desa
+            diuji, baik naga dan pengendara harus membuat keputusan yang mustahil untuk menyelamatkan jenis mereka. </item>
+        <item> Deadpool tentara bayaran Wisecracking bertarung melawan Cable jahat dan kuat dan orang jahat lainnya untuk menyelamatkan hidup anak laki-laki. </item>
+        <item> Dalam serangkaian pertemuan yang meningkat, mantan penjaga keamanan David Dunn menggunakan kekuatan gaibnya
+            kemampuan melacak Kevin Wendell Crumb, seorang lelaki terganggu yang memiliki dua puluh empat kepribadian.
+            Sementara itu, kehadiran bayangan Elia Price muncul sebagai seorang orkestra yang menyimpan rahasia penting bagi keduanya. </item>
+        <item> Miles Morales menyulap hidupnya antara menjadi siswa sekolah menengah dan menjadi manusia laba-laba. Ketika Wilson
+            "Kingpin" Fisk menggunakan collider super, yang lain dari seluruh Spider-Verse diangkut ke dimensi ini. </item>
+    </string-array>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="detail_film">Detail Film</string>
+    <string name="change_language_settings">Ubah Bahasa</string>
+</resources>

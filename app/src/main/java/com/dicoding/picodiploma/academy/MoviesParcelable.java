@@ -79,4 +79,6 @@ public class MoviesParcelable implements Parcelable {
         dest.writeString(deskripsiFilm);
         dest.writeInt(fotoFilm);
     }
+
+
 }

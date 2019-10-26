@@ -1,8 +1,11 @@
 package com.dicoding.picodiploma.academy;
 
+import android.content.Intent;
 import android.content.res.TypedArray;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
@@ -18,6 +21,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
+    TextView tvHello, tvPlural, tvXliff;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -25,9 +29,13 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             Fragment fragment;
+            String title = "";
 
             switch (item.getItemId()) {
                 case R.id.navigation_home:
+                    title = "MOVIES";
+                    setTitle(title);
+
                     fragment = new MoviesFragment();
                     getSupportFragmentManager().beginTransaction()
                             .replace(R.id.container_layout, fragment, fragment.getClass().getSimpleName())
@@ -35,7 +43,8 @@ public class MainActivity extends AppCompatActivity {
                     return true;
 
                 case R.id.navigation_dashboard:
-
+                    title = "TV SHOWS";
+                    setTitle(title);
                     fragment = new TvShowsFragment();
                     getSupportFragmentManager().beginTransaction()
                             .replace(R.id.container_layout, fragment, fragment.getClass().getSimpleName())
@@ -57,8 +66,19 @@ public class MainActivity extends AppCompatActivity {
         if (savedInstanceState == null) {
             navView.setSelectedItemId(R.id.navigation_home);
         }
-//
+
+    } @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_change_settings) {
+            Intent mIntent = new Intent ( Settings.ACTION_LOCALE_SETTINGS);
+            startActivity(mIntent);
+        }
+        return super.onOptionsItemSelected(item);
     }
 
-//
 }

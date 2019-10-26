@@ -34,6 +34,7 @@ public class MoviesFragment extends Fragment {
         rv.setLayoutManager(new LinearLayoutManager(getContext()));
         rv.setAdapter(new MoviesAdapter(getListMovies()));
         // Inflate the layout for this fragment
+        
         return rv;
     }
 
@@ -53,6 +54,5 @@ public class MoviesFragment extends Fragment {
             listMovies.add(movies);
         }
         return listMovies;
-//    }
     }
 }
