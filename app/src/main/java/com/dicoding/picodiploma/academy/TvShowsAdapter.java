@@ -1,6 +1,7 @@
 package com.dicoding.picodiploma.academy;
 
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,16 +12,22 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 public class TvShowsAdapter extends RecyclerView.Adapter<TvShowsAdapter.GridViewHolder> {
-    private ArrayList<MoviesParcelable> listMovies;
 
-    public TvShowsAdapter(ArrayList<MoviesParcelable> list) {
-        this.listMovies = list;
+    private ArrayList<TvShowsParcelable> listTvShows = new ArrayList<> ();
+
+    public TvShowsAdapter() {
+
+    }
+
+    public void setData(ArrayList<TvShowsParcelable> items) {
+        listTvShows.clear ();
+        listTvShows.addAll ( items );
+        notifyDataSetChanged ();
     }
 
     @NonNull
@@ -31,49 +38,48 @@ public class TvShowsAdapter extends RecyclerView.Adapter<TvShowsAdapter.GridView
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final TvShowsAdapter.GridViewHolder holder, int position) {
-        MoviesParcelable movies = listMovies.get ( position );
+    public void onBindViewHolder(@NonNull final GridViewHolder GridViewHolder, int position) {
+        String temp = listTvShows.get ( position ).getGambarFilm ();
 
-        Glide.with ( holder.itemView.getContext () )
-                .load ( listMovies.get ( position ).getFotoFilm () )
-                .apply ( new RequestOptions ().override ( 350, 550 ) )
-                .into ( holder.imgPhoto );
+        String url = "https://image.tmdb.org/t/p/w185" + temp;
 
-        holder.tvJudul.setText ( movies.getNamaFilm () );
-        holder.tvRilis.setText ( movies.getRilisFilm () );
-        holder.itemView.setOnClickListener ( new View.OnClickListener () {
+        GridViewHolder.tvJudul.setText ( listTvShows.get ( position ).getNamaFilm () );
+        Picasso.get ().load ( url ).into ( GridViewHolder.Gambar );
+
+        GridViewHolder.itemView.setOnClickListener ( new View.OnClickListener () {
             @Override
             public void onClick(View v) {
-                Toast.makeText ( holder.itemView.getContext (), "Kamu memilih " +
-                        listMovies.get ( holder.getAdapterPosition () ).getNamaFilm (), Toast.LENGTH_SHORT ).show ();
-                MoviesParcelable moviesParcelable = new MoviesParcelable ();
-                moviesParcelable.setNamaFilm ( listMovies.get ( holder.getAdapterPosition () ).getNamaFilm () );
-                moviesParcelable.setDeskripsiFilm ( listMovies.get ( holder.getAdapterPosition () ).getDeskripsiFilm () );
-                moviesParcelable.setRilisFilm ( listMovies.get ( holder.getAdapterPosition () ).getRilisFilm () );
-                moviesParcelable.setFotoFilm ( listMovies.get ( holder.getAdapterPosition () ).getFotoFilm () );
+                Toast.makeText ( GridViewHolder.itemView.getContext (), "Kamu memilih " +
+                        listTvShows.get ( GridViewHolder.getAdapterPosition () ).getNamaFilm (), Toast.LENGTH_SHORT ).show ();
 
-                Intent intent = new Intent ( v.getContext (), DetailActivity.class );
-                intent.putExtra ( "myData", moviesParcelable );
+                TvShowsParcelable tvShowsParcelable = new TvShowsParcelable ();
+
+                tvShowsParcelable.setNamaFilm ( listTvShows.get ( GridViewHolder.getAdapterPosition () ).getNamaFilm () );
+                tvShowsParcelable.setDeskripsiFilm ( listTvShows.get ( GridViewHolder.getAdapterPosition () ).getDeskripsiFilm () );
+                tvShowsParcelable.setGambarFilm ( listTvShows.get ( GridViewHolder.getAdapterPosition () ).getGambarFilm () );
+
+                Intent intent = new Intent ( v.getContext (), TvShowsDetailActivity.class );
+                intent.putExtra ( "myData", tvShowsParcelable );
                 v.getContext ().startActivity ( intent );
 
             }
         } );
+
     }
 
     @Override
     public int getItemCount() {
-        return listMovies.size ();
+        return listTvShows.size ();
     }
 
     public class GridViewHolder extends RecyclerView.ViewHolder {
-        ImageView imgPhoto;
-        TextView tvJudul, tvRilis;
+        ImageView Gambar;
+        TextView tvJudul;
 
         GridViewHolder(View itemView) {
             super ( itemView );
-            imgPhoto = itemView.findViewById ( R.id.foto_film );
+            Gambar = itemView.findViewById ( R.id.foto_film );
             tvJudul = itemView.findViewById ( R.id.judul_film );
-            tvRilis = itemView.findViewById ( R.id.rilis_film );
         }
     }
 }

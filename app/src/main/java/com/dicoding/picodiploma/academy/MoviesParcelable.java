@@ -3,19 +3,16 @@ package com.dicoding.picodiploma.academy;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import org.json.JSONObject;
+
+import java.text.DecimalFormat;
+
 public class MoviesParcelable implements Parcelable {
 
-    protected MoviesParcelable(Parcel in) {
-        namaFilm = in.readString();
-        rilisFilm = in.readString();
-        deskripsiFilm = in.readString();
-        fotoFilm = in.readInt();
-    }
-
-    public static final Creator<MoviesParcelable> CREATOR = new Creator<MoviesParcelable>() {
+    public static final Creator<MoviesParcelable> CREATOR = new Creator<MoviesParcelable> () {
         @Override
         public MoviesParcelable createFromParcel(Parcel in) {
-            return new MoviesParcelable(in);
+            return new MoviesParcelable ( in );
         }
 
         @Override
@@ -23,6 +20,38 @@ public class MoviesParcelable implements Parcelable {
             return new MoviesParcelable[size];
         }
     };
+
+    private String namaFilm;
+    private String rilisFilm;
+    private String deskripsiFilm;
+    private String gambarFilm;
+
+    protected MoviesParcelable(Parcel in) {
+        namaFilm = in.readString ();
+        rilisFilm = in.readString ();
+        deskripsiFilm = in.readString ();
+        gambarFilm = in.readString ();
+    }
+
+    public MoviesParcelable(JSONObject object) {
+        try {
+            String namaFilm = object.getString ( "title" );
+            String rilisFilm = object.getString ( "release_date" );
+            String deskripsiFilm = object.getString ( "overview" );
+            String gambarFilm = object.getString ( "poster_path" );
+
+            this.namaFilm = namaFilm;
+            this.rilisFilm = rilisFilm;
+            this.deskripsiFilm = deskripsiFilm;
+            this.gambarFilm = gambarFilm;
+        } catch (Exception e) {
+            e.printStackTrace ();
+        }
+    }
+
+    public MoviesParcelable() {
+
+    }
 
     public String getNamaFilm() {
         return namaFilm;
@@ -48,23 +77,12 @@ public class MoviesParcelable implements Parcelable {
         this.deskripsiFilm = deskripsiFilm;
     }
 
-    public int getFotoFilm() {
-        return fotoFilm;
+    public String getGambarFilm() {
+        return gambarFilm;
     }
 
-    public void setFotoFilm(int fotoFilm) {
-        this.fotoFilm = fotoFilm;
-    }
-
-    private String namaFilm;
-    private String rilisFilm;
-    private String deskripsiFilm;
-    private int fotoFilm;
-
-
-
-    public MoviesParcelable() {
-
+    public void setGambarFilm(String gambarFilm) {
+        this.gambarFilm = gambarFilm;
     }
 
     @Override
@@ -74,10 +92,10 @@ public class MoviesParcelable implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(namaFilm);
-        dest.writeString(rilisFilm);
-        dest.writeString(deskripsiFilm);
-        dest.writeInt(fotoFilm);
+        dest.writeString ( namaFilm );
+        dest.writeString ( rilisFilm );
+        dest.writeString ( deskripsiFilm );
+        dest.writeString ( gambarFilm );
     }
 
 

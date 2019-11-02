@@ -1,7 +1,7 @@
 package com.dicoding.picodiploma.academy;
 
 import android.content.Intent;
-import android.content.res.TypedArray;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,18 +12,24 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
+import static androidx.constraintlayout.widget.Constraints.TAG;
+
 public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.CardViewViewHolder> {
 
-    private ArrayList<MoviesParcelable> listMovies;
+    private ArrayList<MoviesParcelable> listMovies = new ArrayList<> ();
 
+    public MoviesAdapter() {
 
-    public MoviesAdapter(ArrayList<MoviesParcelable> list) {
-        this.listMovies = list;
+    }
+
+    public void setData(ArrayList<MoviesParcelable> items) {
+        listMovies.clear ();
+        listMovies.addAll ( items );
+        notifyDataSetChanged ();
     }
 
     @NonNull
@@ -35,30 +41,32 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.CardViewVi
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final CardViewViewHolder holder, int position) {
-        final MoviesParcelable movies = listMovies.get ( position );
+    public void onBindViewHolder(@NonNull final CardViewViewHolder CardViewViewHolder, int position) {
 
-        Glide.with ( holder.itemView.getContext () )
-                .load ( movies.getFotoFilm () )
-                .apply ( new RequestOptions ().override ( 350, 550 ) )
-                .into ( holder.imgPhoto );
+        String temp = listMovies.get ( position ).getGambarFilm ();
+        String url = "https://image.tmdb.org/t/p/w185" + temp;
 
-        holder.tvJudul.setText ( movies.getNamaFilm () );
-        holder.tvRilis.setText ( movies.getRilisFilm () );
-        holder.tvDeskripsi.setText ( movies.getDeskripsiFilm () );
 
-        holder.itemView.setOnClickListener ( new View.OnClickListener () {
+        CardViewViewHolder.tvJudul.setText ( listMovies.get ( position ).getNamaFilm () );
+        CardViewViewHolder.tvRilis.setText ( listMovies.get ( position ).getRilisFilm () );
+        CardViewViewHolder.tvDeskripsi.setText ( listMovies.get ( position ).getDeskripsiFilm () );
+
+        Picasso.get ().load ( url ).into ( CardViewViewHolder.Gambar );
+
+        CardViewViewHolder.itemView.setOnClickListener ( new View.OnClickListener () {
             @Override
             public void onClick(View v) {
-                Toast.makeText ( holder.itemView.getContext (), "Kamu memilih " +
-                        listMovies.get ( holder.getAdapterPosition () ).getNamaFilm (), Toast.LENGTH_SHORT ).show ();
-                MoviesParcelable moviesParcelable = new MoviesParcelable ();
-                moviesParcelable.setNamaFilm ( listMovies.get ( holder.getAdapterPosition () ).getNamaFilm () );
-                moviesParcelable.setDeskripsiFilm ( listMovies.get ( holder.getAdapterPosition () ).getDeskripsiFilm () );
-                moviesParcelable.setRilisFilm ( listMovies.get ( holder.getAdapterPosition () ).getRilisFilm () );
-                moviesParcelable.setFotoFilm (listMovies.get ( holder.getAdapterPosition () ).getFotoFilm ());
+                Toast.makeText ( CardViewViewHolder.itemView.getContext (), "Kamu memilih " +
+                        listMovies.get ( CardViewViewHolder.getAdapterPosition () ).getNamaFilm (), Toast.LENGTH_SHORT ).show ();
 
-                Intent intent = new Intent ( v.getContext (), DetailActivity.class );
+                MoviesParcelable moviesParcelable = new MoviesParcelable ();
+
+                moviesParcelable.setNamaFilm ( listMovies.get ( CardViewViewHolder.getAdapterPosition () ).getNamaFilm () );
+                moviesParcelable.setDeskripsiFilm ( listMovies.get ( CardViewViewHolder.getAdapterPosition () ).getDeskripsiFilm () );
+                moviesParcelable.setRilisFilm ( listMovies.get ( CardViewViewHolder.getAdapterPosition () ).getRilisFilm () );
+                moviesParcelable.setGambarFilm (listMovies.get ( CardViewViewHolder.getAdapterPosition () ).getGambarFilm ());
+
+                Intent intent = new Intent ( v.getContext (), MoviesDetailActivity.class );
                 intent.putExtra ( "myData", moviesParcelable );
                 v.getContext ().startActivity ( intent );
 
@@ -72,12 +80,12 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.CardViewVi
     }
 
     public class CardViewViewHolder extends RecyclerView.ViewHolder {
-        ImageView imgPhoto;
+        public ImageView Gambar;
         TextView tvJudul, tvRilis, tvDeskripsi;
 
         CardViewViewHolder(View itemView) {
             super ( itemView );
-            imgPhoto = itemView.findViewById ( R.id.foto_film );
+            Gambar = itemView.findViewById ( R.id.foto_film );
             tvJudul = itemView.findViewById ( R.id.judul_film );
             tvRilis = itemView.findViewById ( R.id.rilis_film );
             tvDeskripsi = itemView.findViewById ( R.id.deskripsi_film );

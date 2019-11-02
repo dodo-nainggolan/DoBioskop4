@@ -25,12 +25,4 @@
         android:textAlignment="center"
         android:textSize="16dp" />
 
-    <TextView
-        android:id="@+id/rilis_film"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/judul_film"
-        android:text="@string/rilis"
-        android:textAlignment="center"
-        android:textSize="12dp" />
 </RelativeLayout>

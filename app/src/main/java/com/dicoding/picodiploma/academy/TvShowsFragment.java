@@ -7,57 +7,81 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.loader.app.LoaderManager;
+import androidx.loader.content.Loader;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import java.util.ArrayList;
 
-public class TvShowsFragment extends Fragment {
-    private TypedArray dataPhoto;
+public class TvShowsFragment extends Fragment implements LoaderManager.LoaderCallbacks<ArrayList<TvShowsParcelable>> {
+
+    TvShowsAdapter adapter;
+
+    private ArrayList<TvShowsParcelable> list = new ArrayList<> ();
+
+    private RecyclerView rv;
+    private ProgressBar progressBar;
 
     public TvShowsFragment() {
         // Required empty public constructor
     }
 
-
+    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_tv_shows, container, false);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View v = inflater.inflate ( R.layout.fragment_tv_shows, container, false );
         return v;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        RecyclerView rv = view.findViewById(R.id.grid_view_list_item);
+        super.onViewCreated ( view, savedInstanceState );
 
-        rv.setLayoutManager(new GridLayoutManager(getActivity(), 2));
-        TvShowsAdapter tvShowsAdapter = new TvShowsAdapter(getListMovies());
+        adapter = new TvShowsAdapter ();
+        adapter.notifyDataSetChanged ();
 
-        rv.setAdapter(tvShowsAdapter);
+        rv = view.findViewById ( R.id.grid_view_list_item );
+        progressBar = view.findViewById ( R.id.progressBar );
+
+        rv.setLayoutManager ( new GridLayoutManager ( getActivity (), 2 ) );
+        rv.setAdapter ( adapter );
+
+        Bundle bundle = new Bundle ();
+
+        getLoaderManager ().initLoader ( 0, bundle, this );
+        showLoading ( true );
     }
 
-    public ArrayList<MoviesParcelable> getListMovies() {
-        String[] dataName = getResources().getStringArray(R.array.nama_film);
-        String[] dataRilis = getResources().getStringArray(R.array.rilis_film);
-        String[] deskripsiFilm = getResources().getStringArray(R.array.deskripsi_film);
-        dataPhoto = getResources().obtainTypedArray(R.array.data_foto);
+    @Override
+    public Loader<ArrayList<TvShowsParcelable>> onCreateLoader(int id, Bundle args) {
+        return new TvShowsAsyncTaskLoader ( getActivity (), "" );
+    }
 
-        ArrayList<MoviesParcelable> listMovies = new ArrayList<>();
-        for (int i = 0; i < dataName.length; i++) {
-            MoviesParcelable movies = new MoviesParcelable();
-            movies.setNamaFilm(dataName[i]);
-            movies.setRilisFilm(dataRilis[i]);
-            movies.setDeskripsiFilm(deskripsiFilm[i]);
-            movies.setFotoFilm(dataPhoto.getResourceId(i, -1));
-            listMovies.add(movies);
+    @Override
+    public void onLoadFinished(@NonNull Loader<ArrayList<TvShowsParcelable>> loader, ArrayList<TvShowsParcelable> data) {
+        adapter.setData ( data );
+        showLoading ( false );
+    }
+
+
+    @Override
+    public void onLoaderReset(Loader<ArrayList<TvShowsParcelable>> loader) {
+//TODO optimize dirty trick
+//         adapter.setData ( null );
+    }
+    private void showLoading(Boolean state) {
+        if (state) {
+            progressBar.setVisibility ( View.VISIBLE );
+        } else {
+            progressBar.setVisibility ( View.GONE );
         }
-        return listMovies;
     }
 }
 
