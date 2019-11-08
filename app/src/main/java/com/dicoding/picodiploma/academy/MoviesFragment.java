@@ -25,12 +25,13 @@ import java.util.ArrayList;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MoviesFragment extends Fragment implements LoaderManager.LoaderCallbacks<ArrayList<MoviesParcelable>> {
+public class MoviesFragment extends Fragment implements View.OnClickListener,LoaderManager.LoaderCallbacks<ArrayList<MoviesParcelable>> {
 
     MoviesAdapter adapter;
     private ArrayList<MoviesParcelable> list = new ArrayList<> ();
     private RecyclerView rv;
     private ProgressBar progressBar;
+
 
     public MoviesFragment() {
         // Required empty public constructor
@@ -76,6 +77,7 @@ public class MoviesFragment extends Fragment implements LoaderManager.LoaderCall
 
     @Override
     public void onLoaderReset(Loader<ArrayList<MoviesParcelable>> loader) {
+
 //TODO optimize dirty trick
 //                adapter.setData ( null );
     }
@@ -86,6 +88,11 @@ public class MoviesFragment extends Fragment implements LoaderManager.LoaderCall
         } else {
             progressBar.setVisibility ( View.GONE );
         }
+    }
+
+    @Override
+    public void onClick(View v) {
+
     }
 }
 

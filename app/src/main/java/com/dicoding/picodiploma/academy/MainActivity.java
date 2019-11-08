@@ -54,6 +54,17 @@ public class MainActivity extends AppCompatActivity {
                             .commit ();
 
                     return true;
+
+                case R.id.favorite_dashboard:
+
+                    title = "MY FAVORITE";
+                    setTitle ( title );
+                    fragment = new FavoriteFragment ();
+                    getSupportFragmentManager ().beginTransaction ()
+                            .replace ( R.id.container_layout, fragment, fragment.getClass ().getSimpleName () )
+                            .commit ();
+
+                    return true;
             }
             return false;
         }

@@ -64,7 +64,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.CardViewVi
                 moviesParcelable.setNamaFilm ( listMovies.get ( CardViewViewHolder.getAdapterPosition () ).getNamaFilm () );
                 moviesParcelable.setDeskripsiFilm ( listMovies.get ( CardViewViewHolder.getAdapterPosition () ).getDeskripsiFilm () );
                 moviesParcelable.setRilisFilm ( listMovies.get ( CardViewViewHolder.getAdapterPosition () ).getRilisFilm () );
-                moviesParcelable.setGambarFilm (listMovies.get ( CardViewViewHolder.getAdapterPosition () ).getGambarFilm ());
+                moviesParcelable.setGambarFilm ( listMovies.get ( CardViewViewHolder.getAdapterPosition () ).getGambarFilm () );
 
                 Intent intent = new Intent ( v.getContext (), MoviesDetailActivity.class );
                 intent.putExtra ( "myData", moviesParcelable );
@@ -77,6 +77,22 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.CardViewVi
     @Override
     public int getItemCount() {
         return listMovies.size ();
+    }
+
+    public void addItem(MoviesParcelable movies) {
+        this.listMovies.add ( movies );
+        notifyItemInserted ( listMovies.size () - 1 );
+    }
+
+    public void updateItem(int position, MoviesParcelable movies) {
+        this.listMovies.set ( position, movies );
+        notifyItemChanged ( position, movies );
+    }
+
+    public void removeItem(int position) {
+        this.listMovies.remove ( position );
+        notifyItemRemoved ( position );
+        notifyItemRangeChanged ( position, listMovies.size () );
     }
 
     public class CardViewViewHolder extends RecyclerView.ViewHolder {
