@@ -1,9 +1,10 @@
-package com.dicoding.picodiploma.academy;
+package com.dicoding.picodiploma.academy.fragment;
 
 
 import android.content.Context;
 import androidx.loader.content.AsyncTaskLoader;
 
+import com.dicoding.picodiploma.academy.entity.Movies;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.SyncHttpClient;
 
@@ -15,10 +16,10 @@ import java.util.ArrayList;
 import cz.msebera.android.httpclient.Header;
 
 
-public class MoviesAsyncTaskLoader extends AsyncTaskLoader<ArrayList<MoviesParcelable>> {
+public class MoviesAsyncTaskLoader extends AsyncTaskLoader<ArrayList<Movies>> {
 
     private static final String API_KEY = "3a92c0f2b44f88d27ffe2b2de5466cc6";
-    private ArrayList<MoviesParcelable> mData;
+    private ArrayList<Movies> mData;
     private boolean mHasResult = false;
     private String movies;
 
@@ -37,7 +38,7 @@ public class MoviesAsyncTaskLoader extends AsyncTaskLoader<ArrayList<MoviesParce
     }
 
     @Override
-    public void deliverResult(final ArrayList<MoviesParcelable> data) {
+    public void deliverResult(final ArrayList<Movies> data) {
         mData = data;
         mHasResult = true;
         super.deliverResult ( data );
@@ -54,9 +55,9 @@ public class MoviesAsyncTaskLoader extends AsyncTaskLoader<ArrayList<MoviesParce
     }
 
     @Override
-    public ArrayList<MoviesParcelable> loadInBackground() {
+    public ArrayList<Movies> loadInBackground() {
         SyncHttpClient client = new SyncHttpClient ();
-        final ArrayList<MoviesParcelable> moviesItemses = new ArrayList<> ();
+        final ArrayList<Movies> moviesItemses = new ArrayList<> ();
 
         String url = "https://api.themoviedb.org/3/discover/movie?api_key=" + API_KEY  + "&language=en-US";
 
@@ -76,7 +77,7 @@ public class MoviesAsyncTaskLoader extends AsyncTaskLoader<ArrayList<MoviesParce
 
                     for (int i = 0; i < list.length (); i++) {
                         JSONObject movies = list.getJSONObject ( i );
-                        MoviesParcelable moviesItems = new MoviesParcelable ( movies );
+                        Movies moviesItems = new Movies ( movies );
                         moviesItemses.add ( moviesItems );
 
                     }

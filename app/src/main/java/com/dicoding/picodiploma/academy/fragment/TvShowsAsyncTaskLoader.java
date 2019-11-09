@@ -1,8 +1,9 @@
-package com.dicoding.picodiploma.academy;
+package com.dicoding.picodiploma.academy.fragment;
 
 import android.content.Context;
 import androidx.loader.content.AsyncTaskLoader;
 
+import com.dicoding.picodiploma.academy.entity.TvShows;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.SyncHttpClient;
 
@@ -13,10 +14,10 @@ import java.util.ArrayList;
 
 import cz.msebera.android.httpclient.Header;
 
-public class TvShowsAsyncTaskLoader extends AsyncTaskLoader<ArrayList<TvShowsParcelable>> {
+public class TvShowsAsyncTaskLoader extends AsyncTaskLoader<ArrayList<TvShows>> {
 
     private static final String API_KEY = "3a92c0f2b44f88d27ffe2b2de5466cc6";
-    private ArrayList<TvShowsParcelable> mData;
+    private ArrayList<TvShows> mData;
     private boolean mHasResult = false;
     private String tvshow;
 
@@ -35,7 +36,7 @@ public class TvShowsAsyncTaskLoader extends AsyncTaskLoader<ArrayList<TvShowsPar
     }
 
     @Override
-    public void deliverResult(final ArrayList<TvShowsParcelable> data) {
+    public void deliverResult(final ArrayList<TvShows> data) {
         mData = data;
         mHasResult = true;
         super.deliverResult ( data );
@@ -52,9 +53,9 @@ public class TvShowsAsyncTaskLoader extends AsyncTaskLoader<ArrayList<TvShowsPar
     }
 
     @Override
-    public ArrayList<TvShowsParcelable> loadInBackground() {
+    public ArrayList<TvShows> loadInBackground() {
         SyncHttpClient client = new SyncHttpClient ();
-        final ArrayList<TvShowsParcelable> tvshowsItemses = new ArrayList<> ();
+        final ArrayList<TvShows> tvshowsItemses = new ArrayList<> ();
 
         String url = "https://api.themoviedb.org/3/discover/tv?api_key=" + API_KEY;
 
@@ -74,7 +75,7 @@ public class TvShowsAsyncTaskLoader extends AsyncTaskLoader<ArrayList<TvShowsPar
 
                     for (int i = 0; i < list.length (); i++) {
                         JSONObject tvshows = list.getJSONObject ( i );
-                        TvShowsParcelable tvshowsItems = new TvShowsParcelable ( tvshows );
+                        TvShows tvshowsItems = new TvShows ( tvshows );
                         tvshowsItemses.add ( tvshowsItems );
 
                     }

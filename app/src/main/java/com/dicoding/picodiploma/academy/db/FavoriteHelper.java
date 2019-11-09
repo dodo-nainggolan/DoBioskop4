@@ -10,22 +10,22 @@ import android.database.sqlite.SQLiteOpenHelper;
 import static android.provider.BaseColumns._ID;
 import static com.dicoding.picodiploma.academy.db.DatabaseContract.TABLE_NAME;
 
-public class MoviesHelper {
+public class FavoriteHelper {
 
     private static final String DATABASE_TABLE = TABLE_NAME;
     private static DatabaseHelper dataBaseHelper;
-    private static MoviesHelper INSTANCE;
+    private static FavoriteHelper INSTANCE;
     private static SQLiteDatabase database;
 
-    private MoviesHelper(Context context) {
+    private FavoriteHelper(Context context) {
         dataBaseHelper = new DatabaseHelper ( context );
     }
 
-    public static MoviesHelper getInstance(Context context) {
+    public static FavoriteHelper getInstance(Context context) {
         if (INSTANCE == null) {
             synchronized (SQLiteOpenHelper.class) {
                 if (INSTANCE == null) {
-                    INSTANCE = new MoviesHelper ( context );
+                    INSTANCE = new FavoriteHelper ( context );
                 }
             }
         }

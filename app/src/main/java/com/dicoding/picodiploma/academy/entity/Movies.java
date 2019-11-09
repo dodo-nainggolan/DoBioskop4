@@ -1,39 +1,46 @@
-package com.dicoding.picodiploma.academy;
+package com.dicoding.picodiploma.academy.entity;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import org.json.JSONObject;
 
-import java.text.DecimalFormat;
+public class Movies implements Parcelable {
 
-public class MoviesParcelable implements Parcelable {
-
-    public static final Creator<MoviesParcelable> CREATOR = new Creator<MoviesParcelable> () {
+    public static final Creator<Movies> CREATOR = new Creator<Movies> () {
         @Override
-        public MoviesParcelable createFromParcel(Parcel in) {
-            return new MoviesParcelable ( in );
+        public Movies createFromParcel(Parcel in) {
+            return new Movies ( in );
         }
 
         @Override
-        public MoviesParcelable[] newArray(int size) {
-            return new MoviesParcelable[size];
+        public Movies[] newArray(int size) {
+            return new Movies[size];
         }
     };
-
+    private int id;
     private String namaFilm;
     private String rilisFilm;
     private String deskripsiFilm;
     private String gambarFilm;
 
-    protected MoviesParcelable(Parcel in) {
+    public Movies(int id, String namaFilm, String rilisFilm, String deskripsiFilm, String gambarFilm) {
+        this.id = id;
+        this.namaFilm = namaFilm;
+        this.rilisFilm = rilisFilm;
+        this.deskripsiFilm = deskripsiFilm;
+        this.gambarFilm = gambarFilm;
+    }
+
+    protected Movies(Parcel in) {
         namaFilm = in.readString ();
         rilisFilm = in.readString ();
         deskripsiFilm = in.readString ();
         gambarFilm = in.readString ();
+        id = in.readInt ();
     }
 
-    public MoviesParcelable(JSONObject object) {
+    public Movies(JSONObject object) {
         try {
             String namaFilm = object.getString ( "title" );
             String rilisFilm = object.getString ( "release_date" );
@@ -49,8 +56,16 @@ public class MoviesParcelable implements Parcelable {
         }
     }
 
-    public MoviesParcelable() {
+    public Movies() {
 
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getNamaFilm() {
@@ -96,6 +111,7 @@ public class MoviesParcelable implements Parcelable {
         dest.writeString ( rilisFilm );
         dest.writeString ( deskripsiFilm );
         dest.writeString ( gambarFilm );
+        dest.writeInt ( id );
     }
 
 

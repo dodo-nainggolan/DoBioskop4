@@ -1,7 +1,6 @@
-package com.dicoding.picodiploma.academy;
+package com.dicoding.picodiploma.academy.adapter;
 
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,19 +11,22 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.dicoding.picodiploma.academy.R;
+import com.dicoding.picodiploma.academy.TvShowsDetailActivity;
+import com.dicoding.picodiploma.academy.entity.TvShows;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 public class TvShowsAdapter extends RecyclerView.Adapter<TvShowsAdapter.GridViewHolder> {
 
-    private ArrayList<TvShowsParcelable> listTvShows = new ArrayList<> ();
+    private ArrayList<TvShows> listTvShows = new ArrayList<> ();
 
     public TvShowsAdapter() {
 
     }
 
-    public void setData(ArrayList<TvShowsParcelable> items) {
+    public void setData(ArrayList<TvShows> items) {
         listTvShows.clear ();
         listTvShows.addAll ( items );
         notifyDataSetChanged ();
@@ -52,14 +54,14 @@ public class TvShowsAdapter extends RecyclerView.Adapter<TvShowsAdapter.GridView
                 Toast.makeText ( GridViewHolder.itemView.getContext (), "Kamu memilih " +
                         listTvShows.get ( GridViewHolder.getAdapterPosition () ).getNamaFilm (), Toast.LENGTH_SHORT ).show ();
 
-                TvShowsParcelable tvShowsParcelable = new TvShowsParcelable ();
+                TvShows tvShows = new TvShows ();
 
-                tvShowsParcelable.setNamaFilm ( listTvShows.get ( GridViewHolder.getAdapterPosition () ).getNamaFilm () );
-                tvShowsParcelable.setDeskripsiFilm ( listTvShows.get ( GridViewHolder.getAdapterPosition () ).getDeskripsiFilm () );
-                tvShowsParcelable.setGambarFilm ( listTvShows.get ( GridViewHolder.getAdapterPosition () ).getGambarFilm () );
+                tvShows.setNamaFilm ( listTvShows.get ( GridViewHolder.getAdapterPosition () ).getNamaFilm () );
+                tvShows.setDeskripsiFilm ( listTvShows.get ( GridViewHolder.getAdapterPosition () ).getDeskripsiFilm () );
+                tvShows.setGambarFilm ( listTvShows.get ( GridViewHolder.getAdapterPosition () ).getGambarFilm () );
 
                 Intent intent = new Intent ( v.getContext (), TvShowsDetailActivity.class );
-                intent.putExtra ( "myData", tvShowsParcelable );
+                intent.putExtra ( "myData", tvShows );
                 v.getContext ().startActivity ( intent );
 
             }

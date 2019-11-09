@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.dicoding.picodiploma.academy.entity.TvShows;
 import com.squareup.picasso.Picasso;
 
 public class TvShowsDetailActivity extends AppCompatActivity {
@@ -21,15 +22,15 @@ public class TvShowsDetailActivity extends AppCompatActivity {
         TextView tvRilis = findViewById ( R.id.rilis_film );
         ImageView tvFotoDetail = findViewById ( R.id.foto_detail );
 
-        TvShowsParcelable tvShowsParcelable = getIntent ().getParcelableExtra ( "myData" );
+        TvShows tvShows = getIntent ().getParcelableExtra ( "myData" );
 
 
-        if (tvShowsParcelable != null) {
+        if (tvShows != null) {
 
-            String url = "https://image.tmdb.org/t/p/w500" + tvShowsParcelable.getGambarFilm ();
+            String url = "https://image.tmdb.org/t/p/w500" + tvShows.getGambarFilm ();
 
-            tvJudul.setText ( tvShowsParcelable.getNamaFilm () );
-            tvDeskripsi.setText ( tvShowsParcelable.getDeskripsiFilm () );
+            tvJudul.setText ( tvShows.getNamaFilm () );
+            tvDeskripsi.setText ( tvShows.getDeskripsiFilm () );
             Picasso.get ().load ( url ).into ( tvFotoDetail );
         }
     }

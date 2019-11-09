@@ -1,21 +1,21 @@
-package com.dicoding.picodiploma.academy;
+package com.dicoding.picodiploma.academy.entity;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import org.json.JSONObject;
 
-public class TvShowsParcelable implements Parcelable {
+public class TvShows implements Parcelable {
 
-    public static final Creator<TvShowsParcelable> CREATOR = new Creator<TvShowsParcelable> () {
+    public static final Creator<TvShows> CREATOR = new Creator<TvShows> () {
         @Override
-        public TvShowsParcelable createFromParcel(Parcel in) {
-            return new TvShowsParcelable ( in );
+        public TvShows createFromParcel(Parcel in) {
+            return new TvShows ( in );
         }
 
         @Override
-        public TvShowsParcelable[] newArray(int size) {
-            return new TvShowsParcelable[size];
+        public TvShows[] newArray(int size) {
+            return new TvShows[size];
         }
     };
 
@@ -23,13 +23,13 @@ public class TvShowsParcelable implements Parcelable {
     private String gambarFilm;
     private String deskripsiFilm;
 
-    protected TvShowsParcelable(Parcel in) {
+    protected TvShows(Parcel in) {
         namaFilm = in.readString ();
         gambarFilm = in.readString ();
         deskripsiFilm = in.readString ();
     }
 
-    public TvShowsParcelable(JSONObject object) {
+    public TvShows(JSONObject object) {
         try {
             String namaFilm = object.getString ( "original_name" );
             String gambarFilm = object.getString ( "poster_path" );
@@ -43,7 +43,7 @@ public class TvShowsParcelable implements Parcelable {
         }
     }
 
-    public TvShowsParcelable() {
+    public TvShows() {
 
     }
 

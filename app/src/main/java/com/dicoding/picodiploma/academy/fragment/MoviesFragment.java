@@ -1,7 +1,6 @@
-package com.dicoding.picodiploma.academy;
+package com.dicoding.picodiploma.academy.fragment;
 
 
-import android.content.res.TypedArray;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -9,7 +8,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.content.Loader;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -18,25 +16,31 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
+import com.dicoding.picodiploma.academy.R;
+import com.dicoding.picodiploma.academy.adapter.MoviesAdapter;
+import com.dicoding.picodiploma.academy.entity.Movies;
+
 import java.util.ArrayList;
 
-public class TvShowsFragment extends Fragment implements LoaderManager.LoaderCallbacks<ArrayList<TvShowsParcelable>> {
 
-    TvShowsAdapter adapter;
+/**
+ * A simple {@link Fragment} subclass.
+ */
+public class MoviesFragment extends Fragment implements LoaderManager.LoaderCallbacks<ArrayList<Movies>> {
 
-    private ArrayList<TvShowsParcelable> list = new ArrayList<> ();
-
+    MoviesAdapter adapter;
     private RecyclerView rv;
     private ProgressBar progressBar;
 
-    public TvShowsFragment() {
+
+    public MoviesFragment() {
         // Required empty public constructor
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate ( R.layout.fragment_tv_shows, container, false );
+        View v = inflater.inflate ( R.layout.fragment_movies, container, false );
         return v;
     }
 
@@ -44,38 +48,41 @@ public class TvShowsFragment extends Fragment implements LoaderManager.LoaderCal
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated ( view, savedInstanceState );
 
-        adapter = new TvShowsAdapter ();
+        adapter = new MoviesAdapter ();
         adapter.notifyDataSetChanged ();
 
-        rv = view.findViewById ( R.id.grid_view_list_item );
+        rv = view.findViewById ( R.id.card_view_list_item );
         progressBar = view.findViewById ( R.id.progressBar );
 
-        rv.setLayoutManager ( new GridLayoutManager ( getActivity (), 2 ) );
+        rv.setLayoutManager ( new LinearLayoutManager ( getContext () ) );
         rv.setAdapter ( adapter );
 
-        Bundle bundle = new Bundle ();
 
+        Bundle bundle = new Bundle ();
         getLoaderManager ().initLoader ( 0, bundle, this );
         showLoading ( true );
+
     }
 
     @Override
-    public Loader<ArrayList<TvShowsParcelable>> onCreateLoader(int id, Bundle args) {
-        return new TvShowsAsyncTaskLoader ( getActivity (), "" );
+    public Loader<ArrayList<Movies>> onCreateLoader(int id, Bundle args) {
+        return new MoviesAsyncTaskLoader ( getActivity (), "" );
     }
 
     @Override
-    public void onLoadFinished(@NonNull Loader<ArrayList<TvShowsParcelable>> loader, ArrayList<TvShowsParcelable> data) {
+    public void onLoadFinished(@NonNull Loader<ArrayList<Movies>> loader, ArrayList<Movies> data) {
+
         adapter.setData ( data );
         showLoading ( false );
     }
 
-
     @Override
-    public void onLoaderReset(Loader<ArrayList<TvShowsParcelable>> loader) {
+    public void onLoaderReset(Loader<ArrayList<Movies>> loader) {
+
 //TODO optimize dirty trick
-//         adapter.setData ( null );
+//                adapter.setData ( null );
     }
+
     private void showLoading(Boolean state) {
         if (state) {
             progressBar.setVisibility ( View.VISIBLE );
@@ -83,6 +90,6 @@ public class TvShowsFragment extends Fragment implements LoaderManager.LoaderCal
             progressBar.setVisibility ( View.GONE );
         }
     }
-}
 
+}
 

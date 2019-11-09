@@ -1,27 +1,24 @@
 package com.dicoding.picodiploma.academy;
 
 import android.content.Intent;
-import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.dicoding.picodiploma.academy.R;
+import com.dicoding.picodiploma.academy.db.FavoriteHelper;
+import com.dicoding.picodiploma.academy.fragment.FavoriteFragment;
+import com.dicoding.picodiploma.academy.fragment.MoviesFragment;
+import com.dicoding.picodiploma.academy.fragment.TvShowsFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import java.util.ArrayList;
-
 public class MainActivity extends AppCompatActivity {
+
+    private FavoriteHelper favoriteHelper;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener () {
@@ -80,6 +77,9 @@ public class MainActivity extends AppCompatActivity {
         if (savedInstanceState == null) {
             navView.setSelectedItemId ( R.id.navigation_home );
         }
+
+        favoriteHelper = FavoriteHelper.getInstance ( getApplicationContext () );
+        favoriteHelper.open ();
 
     }
 
