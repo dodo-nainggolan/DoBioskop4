@@ -98,8 +98,6 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.CardViewVi
                 values.put ( GAMBAR_FILM, gambarFilm );
 
                 long result = favoriteHelper.insert ( values );
-
-                Log.e ( TAG, "onClick: " + result );
             }
         } );
     }
@@ -107,22 +105,6 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.CardViewVi
     @Override
     public int getItemCount() {
         return listMovies.size ();
-    }
-
-    public void addItem(Movies movies) {
-        this.listMovies.add ( movies );
-        notifyItemInserted ( listMovies.size () - 1 );
-    }
-
-    public void updateItem(int position, Movies movies) {
-        this.listMovies.set ( position, movies );
-        notifyItemChanged ( position, movies );
-    }
-
-    public void removeItem(int position) {
-        this.listMovies.remove ( position );
-        notifyItemRemoved ( position );
-        notifyItemRangeChanged ( position, listMovies.size () );
     }
 
     public void ambildata(int cv) {

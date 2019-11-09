@@ -12,7 +12,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:background="@drawable/layout_border"
         android:padding="4dp"
@@ -22,19 +22,17 @@
         card_view:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/foto_film"
+            android:id="@+id/foto_film_fav"
             android:layout_width="100dp"
-            android:layout_height="match_parent"
+            android:layout_height="130dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_alignParentBottom="true"
             android:layout_marginStart="4dp"
             android:layout_marginTop="4dp"
-            android:layout_marginBottom="4dp"
             android:scaleType="fitXY" />
 
         <TextView
-            android:id="@+id/judul_film"
+            android:id="@+id/judul_film_fav"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
@@ -42,55 +40,51 @@
             android:layout_marginStart="13dp"
             android:layout_marginTop="4dp"
             android:layout_marginEnd="4dp"
-            android:layout_toEndOf="@id/foto_film"
+            android:layout_toEndOf="@id/foto_film_fav"
             android:maxLines="1"
             android:text="@string/judul_film"
             android:textSize="10sp"
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/rilis_film"
+            android:id="@+id/rilis_film_fav"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/judul_film"
+            android:layout_below="@id/judul_film_fav"
             android:layout_alignParentEnd="true"
             android:layout_marginStart="13dp"
             android:layout_marginTop="5dp"
             android:layout_marginEnd="4dp"
-            android:layout_toEndOf="@+id/foto_film"
-            android:layout_toRightOf="@id/foto_film"
+            android:layout_toEndOf="@+id/foto_film_fav"
+            android:layout_toRightOf="@id/foto_film_fav"
             android:text="@string/rilis"
             android:textSize="10sp"
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/deskripsi_film"
+            android:id="@+id/deskripsi_film_fav"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:layout_below="@id/rilis_film"
+            android:layout_below="@id/rilis_film_fav"
             android:layout_alignParentEnd="true"
             android:layout_marginStart="13dp"
             android:layout_marginTop="5dp"
             android:layout_marginEnd="4dp"
-            android:layout_toEndOf="@+id/foto_film"
-            android:layout_toRightOf="@id/foto_film"
+            android:layout_toEndOf="@+id/foto_film_fav"
+            android:layout_toRightOf="@id/foto_film_fav"
             android:ellipsize="end"
             android:maxLines="2"
             android:text="@string/deksripsi_film"
             android:textSize="10sp" />
 
         <Button
-            android:id="@+id/btn_remove"
+            android:id="@+id/btn_remove_fav"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/deskripsi_film"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="96dp"
+            android:layout_below="@+id/deskripsi_film_fav"
+            android:layout_marginStart="13dp"
             android:layout_marginTop="5dp"
-            android:layout_marginEnd="102dp"
-            android:layout_marginBottom="4dp"
-            android:layout_toEndOf="@+id/foto_film"
+            android:layout_toEndOf="@+id/foto_film_fav"
             android:text="@string/btn_remove"
             android:textSize="10sp" />"/>
 

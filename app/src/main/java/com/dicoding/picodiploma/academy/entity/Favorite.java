@@ -5,10 +5,10 @@ import android.os.Parcelable;
 
 public class Favorite implements Parcelable {
 
-    public static final Creator<Favorite> CREATOR = new Creator<Favorite> () {
+    public static final Parcelable.Creator<Favorite> CREATOR = new Parcelable.Creator<Favorite> () {
         @Override
-        public Favorite createFromParcel(Parcel in) {
-            return new Favorite ( in );
+        public Favorite createFromParcel(Parcel source) {
+            return new Favorite ( source );
         }
 
         @Override
@@ -28,6 +28,10 @@ public class Favorite implements Parcelable {
         this.rilisFilm = rilisFilm;
         this.deskripsiFilm = deskripsiFilm;
         this.gambarFilm = gambarFilm;
+    }
+
+    public Favorite() {
+
     }
 
     protected Favorite(Parcel in) {

@@ -10,33 +10,38 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.dicoding.picodiploma.academy.R;
-import com.dicoding.picodiploma.academy.adapter.MoviesAdapter;
+import com.dicoding.picodiploma.academy.adapter.FavoriteAdapter;
 import com.dicoding.picodiploma.academy.db.FavoriteHelper;
-import com.dicoding.picodiploma.academy.entity.Movies;
+import com.dicoding.picodiploma.academy.entity.Favorite;
 import com.dicoding.picodiploma.academy.helper.MappingHelper;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
+import static androidx.constraintlayout.widget.Constraints.TAG;
+
 interface LoadNotesCallback {
     void preExecute();
 
-    void postExecute(ArrayList<Movies> notes);
+    void postExecute(ArrayList<Favorite> favorites);
 }
 
 public class FavoriteFragment extends Fragment implements LoadNotesCallback {
-    private final ArrayList<Movies> listMovies = new ArrayList<> ();
 
-    MoviesAdapter adapter;
+    private static final String EXTRA_STATE = "EXTRA_STATE";
+    private FavoriteAdapter adapter;
     private RecyclerView rv;
     private ProgressBar progressBar;
     private FavoriteHelper favoriteHelper;
+    private TextView namaFilm;
 
     public FavoriteFragment() {
         // Required empty public constructor
@@ -53,7 +58,7 @@ public class FavoriteFragment extends Fragment implements LoadNotesCallback {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated ( view, savedInstanceState );
 
-        adapter = new MoviesAdapter ();
+        adapter = new FavoriteAdapter ();
         adapter.notifyDataSetChanged ();
 
         rv = view.findViewById ( R.id.card_view_list_item_fav );
@@ -66,25 +71,32 @@ public class FavoriteFragment extends Fragment implements LoadNotesCallback {
         favoriteHelper.open ();
 
         new LoadNotesAsync ( favoriteHelper, this ).execute ();
+
     }
 
     @Override
     public void preExecute() {
-
     }
 
     @Override
-    public void postExecute(ArrayList<Movies> notes) {
-
+    public void postExecute(ArrayList<Favorite> favorite) {
+        Log.e ( "MainActivity", "postExecute: "+favorite  );
+        adapter.setListNotes ( favorite );
     }
 
-    private static class LoadNotesAsync extends AsyncTask<Void, Void, ArrayList<Movies>> {
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState ( outState );
+        outState.putParcelableArrayList ( EXTRA_STATE, adapter.getListNotes () );
+    }
 
-        private final WeakReference<FavoriteHelper> weakNoteHelper;
+    private static class LoadNotesAsync extends AsyncTask<Void, Void, ArrayList<Favorite>> {
+
+        private final WeakReference<FavoriteHelper> weakFavHelper;
         private final WeakReference<LoadNotesCallback> weakCallback;
 
         private LoadNotesAsync(FavoriteHelper noteHelper, LoadNotesCallback callback) {
-            weakNoteHelper = new WeakReference<> ( noteHelper );
+            weakFavHelper = new WeakReference<> ( noteHelper );
             weakCallback = new WeakReference<> ( callback );
         }
 
@@ -95,16 +107,17 @@ public class FavoriteFragment extends Fragment implements LoadNotesCallback {
         }
 
         @Override
-        protected ArrayList<Movies> doInBackground(Void... voids) {
-            Cursor dataCursor = weakNoteHelper.get ().queryAll ();
+        protected ArrayList<Favorite> doInBackground(Void... voids) {
+            Cursor dataCursor = weakFavHelper.get ().queryAll ();
+            Log.e ( TAG, "doInBackground: " + dataCursor );
             return MappingHelper.mapCursorToArrayList ( dataCursor );
         }
 
         @Override
-        protected void onPostExecute(ArrayList<Movies> movies) {
-            super.onPostExecute ( movies );
+        protected void onPostExecute(ArrayList<Favorite> favorites) {
+            super.onPostExecute ( favorites );
 
-            weakCallback.get ().postExecute ( movies );
+            weakCallback.get ().postExecute ( favorites );
 
         }
     }
