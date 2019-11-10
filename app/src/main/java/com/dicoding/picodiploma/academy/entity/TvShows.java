@@ -2,8 +2,11 @@ package com.dicoding.picodiploma.academy.entity;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 import org.json.JSONObject;
+
+import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public class TvShows implements Parcelable {
 
@@ -18,13 +21,14 @@ public class TvShows implements Parcelable {
             return new TvShows[size];
         }
     };
-
+    private int id;
     private String namaFilm;
     private String gambarFilm;
     private String deskripsiFilm;
     private String rilisFilm;
 
-    public TvShows(String namaFilm, String gambarFilm, String deskripsiFilm, String rilisFilm) {
+    public TvShows(int id, String namaFilm, String gambarFilm, String deskripsiFilm, String rilisFilm) {
+        this.id = id;
         this.namaFilm = namaFilm;
         this.gambarFilm = gambarFilm;
         this.deskripsiFilm = deskripsiFilm;
@@ -32,6 +36,7 @@ public class TvShows implements Parcelable {
     }
 
     protected TvShows(Parcel in) {
+        id = in.readInt ();
         namaFilm = in.readString ();
         gambarFilm = in.readString ();
         deskripsiFilm = in.readString ();
@@ -40,11 +45,14 @@ public class TvShows implements Parcelable {
 
     public TvShows(JSONObject object) {
         try {
+
+            int id = object.getInt ( "id" );
             String namaFilm = object.getString ( "original_name" );
             String gambarFilm = object.getString ( "poster_path" );
             String deskripsiFilm = object.getString ( "overview" );
             String rilisFilm = object.getString ( "first_air_date" );
 
+            this.id = id;
             this.namaFilm = namaFilm;
             this.gambarFilm = gambarFilm;
             this.deskripsiFilm = deskripsiFilm;
@@ -57,6 +65,14 @@ public class TvShows implements Parcelable {
 
     public TvShows() {
 
+    }
+
+    public int getIdFilm() {
+        return id;
+    }
+
+    public void setIdFilm(int id) {
+        this.id = id;
     }
 
     public String getRilisFilm() {
@@ -98,6 +114,7 @@ public class TvShows implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt ( id );
         dest.writeString ( namaFilm );
         dest.writeString ( gambarFilm );
         dest.writeString ( deskripsiFilm );

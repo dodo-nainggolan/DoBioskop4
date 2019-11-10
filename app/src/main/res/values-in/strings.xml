@@ -7,10 +7,10 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="change_language_settings">Ubah Bahasa</string>
-    <string name="favorite_dashboard">FAVORITE</string>
-    <string name="btn_remove">REMOVE</string>
+    <string name="favorite_dashboard">FAVORIT</string>
+    <string name="btn_fav">Favorit</string>
+    <string name="btn_remove">HAPUS</string>
     <string name="tab_text_1">FILM</string>
-    <string name="tab_text_2">FAVORITE</string>
-    <string name="content_tab_home">INI TAB FAVORITE</string>
+    <string name="tab_text_2">SIARAN TV</string>
     <string name="content_tab_tv">INI TAB TVSHOW</string>
 </resources>

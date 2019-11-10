@@ -1,7 +1,5 @@
 package com.dicoding.picodiploma.academy.adapter;
 
-import android.app.FragmentTransaction;
-import android.content.ContentValues;
 import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,34 +13,33 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.dicoding.picodiploma.academy.FavoriteDetailActivity;
-import com.dicoding.picodiploma.academy.MoviesDetailActivity;
+import com.dicoding.picodiploma.academy.FavoriteTvShowsDetailActivity;
 import com.dicoding.picodiploma.academy.R;
-import com.dicoding.picodiploma.academy.entity.Favorite;
-import com.dicoding.picodiploma.academy.db.FavoriteHelper;
+import com.dicoding.picodiploma.academy.db.FavoriteTvShowsHelper;
+import com.dicoding.picodiploma.academy.entity.FavoriteTvShows;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 import static androidx.constraintlayout.widget.Constraints.TAG;
 
-public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.CardViewViewHolder> {
+public class FavoriteTvShowsAdapter extends RecyclerView.Adapter<FavoriteTvShowsAdapter.CardViewViewHolder> {
 
-    public final Favorite fav = new Favorite ();
-    private ArrayList<Favorite> listFav = new ArrayList<> ();
+    public final FavoriteTvShows fav = new FavoriteTvShows ();
+    private ArrayList<FavoriteTvShows> listFav = new ArrayList<> ();
     private String judulFilm, rilisFilm, deskripsiFilm, gambarFilm;
-    private FavoriteHelper favoriteHelper;
+    private int idFilm;
+    private FavoriteTvShowsHelper favoriteTvShowsHelper;
 
-    public FavoriteAdapter() {
+    public FavoriteTvShowsAdapter() {
 
     }
 
-    public ArrayList<Favorite> getListNotes() {
-        Log.e ( "TEST", "getListNotes: " + listFav.size () );
+    public ArrayList<FavoriteTvShows> getListNotes() {
         return listFav;
     }
 
-    public void setListNotes(ArrayList<Favorite> listNotes) {
+    public void setListNotes(ArrayList<FavoriteTvShows> listNotes) {
 
         if (listNotes.size () > 0) {
             this.listFav.clear ();
@@ -56,13 +53,13 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.CardVi
     @NonNull
     @Override
     public CardViewViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
-        View view = LayoutInflater.from ( viewGroup.getContext () ).inflate ( R.layout.card_view_favorite_layout, viewGroup, false );
+        View view = LayoutInflater.from ( viewGroup.getContext () ).inflate ( R.layout.card_view_favorite_tvshows_layout, viewGroup, false );
         return new CardViewViewHolder ( view );
     }
 
     @Override
     public void onBindViewHolder(@NonNull final CardViewViewHolder holder, final int position) {
-        favoriteHelper = FavoriteHelper.getInstance ( null );
+        favoriteTvShowsHelper = FavoriteTvShowsHelper.getInstance ( null );
         String temp = listFav.get ( position ).getGambarFilm ();
         String url = "https://image.tmdb.org/t/p/w185" + temp;
 
@@ -75,8 +72,7 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.CardVi
         holder.btnRemove.setOnClickListener ( new View.OnClickListener () {
             @Override
             public void onClick(View v) {
-                Log.e ( TAG, "onClick: " + listFav.get ( position ).getId () );
-                favoriteHelper.deleteById ( String.valueOf ( listFav.get ( position ).getId () ) );
+                favoriteTvShowsHelper.deleteById ( String.valueOf ( listFav.get ( position ).getId () ) );
                 Toast.makeText ( holder.itemView.getContext (), "Berhasil menghapus data", Toast.LENGTH_SHORT ).show ();
                 listFav.remove ( position );
                 notifyDataSetChanged ();
@@ -92,7 +88,7 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.CardVi
                 int cv = holder.getPosition ();
                 ambildata ( cv );
 
-                Intent intent = new Intent ( v.getContext (), FavoriteDetailActivity.class );
+                Intent intent = new Intent ( v.getContext (), FavoriteTvShowsDetailActivity.class );
                 intent.putExtra ( "myData", fav );
                 v.getContext ().startActivity ( intent );
 
@@ -102,11 +98,13 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.CardVi
 
     public void ambildata(int cv) {
 
+        fav.setId ( listFav.get ( cv ).getId () );
         fav.setNamaFilm ( listFav.get ( cv ).getNamaFilm () );
         fav.setDeskripsiFilm ( listFav.get ( cv ).getDeskripsiFilm () );
         fav.setRilisFilm ( listFav.get ( cv ).getRilisFilm () );
         fav.setGambarFilm ( listFav.get ( cv ).getGambarFilm () );
 
+        idFilm = fav.getId ();
         judulFilm = fav.getNamaFilm ();
         rilisFilm = fav.getRilisFilm ();
         deskripsiFilm = fav.getDeskripsiFilm ();
@@ -116,7 +114,6 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.CardVi
 
     @Override
     public int getItemCount() {
-        Log.e ( "NoteAdapter", "getItemCount: " + listFav.size () );
         return listFav.size ();
     }
 

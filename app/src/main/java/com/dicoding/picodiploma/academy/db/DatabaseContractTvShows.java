@@ -2,9 +2,9 @@ package com.dicoding.picodiploma.academy.db;
 
 import android.provider.BaseColumns;
 
-public class DatabaseContract {
+public class DatabaseContractTvShows {
 
-    public static final String TABLE_NAME = "domovies";
+    public static final String TABLE_NAME = "domoviestv";
 
     public final class MoviesColumn implements BaseColumns {
 

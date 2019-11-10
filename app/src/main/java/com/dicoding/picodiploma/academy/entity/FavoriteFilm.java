@@ -3,19 +3,17 @@ package com.dicoding.picodiploma.academy.entity;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import org.json.JSONObject;
+public class FavoriteFilm implements Parcelable {
 
-public class Movies implements Parcelable {
-
-    public static final Creator<Movies> CREATOR = new Creator<Movies> () {
+    public static final Parcelable.Creator<FavoriteFilm> CREATOR = new Parcelable.Creator<FavoriteFilm> () {
         @Override
-        public Movies createFromParcel(Parcel in) {
-            return new Movies ( in );
+        public FavoriteFilm createFromParcel(Parcel source) {
+            return new FavoriteFilm ( source );
         }
 
         @Override
-        public Movies[] newArray(int size) {
-            return new Movies[size];
+        public FavoriteFilm[] newArray(int size) {
+            return new FavoriteFilm[size];
         }
     };
     private int id;
@@ -24,7 +22,7 @@ public class Movies implements Parcelable {
     private String deskripsiFilm;
     private String gambarFilm;
 
-    public Movies(int id, String namaFilm, String rilisFilm, String deskripsiFilm, String gambarFilm) {
+    public FavoriteFilm(int id, String namaFilm, String rilisFilm, String deskripsiFilm, String gambarFilm) {
         this.id = id;
         this.namaFilm = namaFilm;
         this.rilisFilm = rilisFilm;
@@ -32,34 +30,16 @@ public class Movies implements Parcelable {
         this.gambarFilm = gambarFilm;
     }
 
-    protected Movies(Parcel in) {
+    public FavoriteFilm() {
+
+    }
+
+    protected FavoriteFilm(Parcel in) {
+        id = in.readInt ();
         namaFilm = in.readString ();
         rilisFilm = in.readString ();
         deskripsiFilm = in.readString ();
         gambarFilm = in.readString ();
-        id = in.readInt ();
-    }
-
-    public Movies(JSONObject object) {
-        try {
-            int id = object.getInt ( "id" );
-            String namaFilm = object.getString ( "title" );
-            String rilisFilm = object.getString ( "release_date" );
-            String deskripsiFilm = object.getString ( "overview" );
-            String gambarFilm = object.getString ( "poster_path" );
-
-            this.id = id;
-            this.namaFilm = namaFilm;
-            this.rilisFilm = rilisFilm;
-            this.deskripsiFilm = deskripsiFilm;
-            this.gambarFilm = gambarFilm;
-        } catch (Exception e) {
-            e.printStackTrace ();
-        }
-    }
-
-    public Movies() {
-
     }
 
     public int getId() {
@@ -115,6 +95,4 @@ public class Movies implements Parcelable {
         dest.writeString ( deskripsiFilm );
         dest.writeString ( gambarFilm );
     }
-
-
 }

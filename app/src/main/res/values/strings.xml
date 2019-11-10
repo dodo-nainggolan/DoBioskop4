@@ -12,9 +12,7 @@
     <string name="btn_remove">REMOVE</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="tab_text_1">FILM</string>
-    <string name="tab_text_2">FAVORITE</string>
-    <string name="content_tab_home">INI TAB FAVORITE</string>
+    <string name="tab_text_2">TV SHOWS</string>
     <string name="content_tab_tv">INI TAB TVSHOW</string>
 </resources>

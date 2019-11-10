@@ -10,14 +10,16 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
-import com.dicoding.picodiploma.academy.db.FavoriteHelper;
+import com.dicoding.picodiploma.academy.db.FavoriteFilmHelper;
+import com.dicoding.picodiploma.academy.db.FavoriteTvShowsHelper;
 import com.dicoding.picodiploma.academy.fragment.MoviesFragment;
 import com.dicoding.picodiploma.academy.fragment.TvShowsFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
 
-    private FavoriteHelper favoriteHelper;
+    private FavoriteFilmHelper favoriteFilmHelper;
+    private FavoriteTvShowsHelper favoriteTvShowsHelper;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener () {
@@ -54,11 +56,11 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.favorite_dashboard:
 
                     Intent favActivity = new Intent ( MainActivity.this, MyTabLayout.class );
-                    startActivity (favActivity);
+                    startActivity ( favActivity );
 
 //                    title = "MY FAVORITE";
 //                    setTitle ( title );
-//                    fragment = new FavoriteFragment ();
+//                    fragment = new FavoriteFilmFragment ();
 //                    getSupportFragmentManager ().beginTransaction ()
 //                            .replace ( R.id.container_layout, fragment, fragment.getClass ().getSimpleName () )
 //                            .commit ();
@@ -81,8 +83,10 @@ public class MainActivity extends AppCompatActivity {
             navView.setSelectedItemId ( R.id.navigation_home );
         }
 
-        favoriteHelper = FavoriteHelper.getInstance ( getApplicationContext () );
-        favoriteHelper.open ();
+        favoriteFilmHelper = FavoriteFilmHelper.getInstance ( getApplicationContext () );
+        favoriteFilmHelper.open ();
+        favoriteTvShowsHelper = FavoriteTvShowsHelper.getInstance ( getApplicationContext () );
+        favoriteTvShowsHelper.open ();
 
 
     }

@@ -8,24 +8,24 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import static android.provider.BaseColumns._ID;
-import static com.dicoding.picodiploma.academy.db.DatabaseContract.TABLE_NAME;
+import static com.dicoding.picodiploma.academy.db.DatabaseContractFilm.TABLE_NAME;
 
-public class FavoriteHelper {
+public class FavoriteFilmHelper {
 
     private static final String DATABASE_TABLE = TABLE_NAME;
     private static DatabaseHelper dataBaseHelper;
-    private static FavoriteHelper INSTANCE;
+    private static FavoriteFilmHelper INSTANCE;
     private static SQLiteDatabase database;
 
-    private FavoriteHelper(Context context) {
+    private FavoriteFilmHelper(Context context) {
         dataBaseHelper = new DatabaseHelper ( context );
     }
 
-    public static FavoriteHelper getInstance(Context context) {
+    public static FavoriteFilmHelper getInstance(Context context) {
         if (INSTANCE == null) {
             synchronized (SQLiteOpenHelper.class) {
                 if (INSTANCE == null) {
-                    INSTANCE = new FavoriteHelper ( context );
+                    INSTANCE = new FavoriteFilmHelper ( context );
                 }
             }
         }

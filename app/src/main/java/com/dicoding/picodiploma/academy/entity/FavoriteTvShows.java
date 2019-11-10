@@ -3,17 +3,17 @@ package com.dicoding.picodiploma.academy.entity;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class Favorite implements Parcelable {
+public class FavoriteTvShows implements Parcelable {
 
-    public static final Parcelable.Creator<Favorite> CREATOR = new Parcelable.Creator<Favorite> () {
+    public static final Creator<FavoriteTvShows> CREATOR = new Creator<FavoriteTvShows> () {
         @Override
-        public Favorite createFromParcel(Parcel source) {
-            return new Favorite ( source );
+        public FavoriteTvShows createFromParcel(Parcel source) {
+            return new FavoriteTvShows ( source );
         }
 
         @Override
-        public Favorite[] newArray(int size) {
-            return new Favorite[size];
+        public FavoriteTvShows[] newArray(int size) {
+            return new FavoriteTvShows[size];
         }
     };
     private int id;
@@ -22,7 +22,7 @@ public class Favorite implements Parcelable {
     private String deskripsiFilm;
     private String gambarFilm;
 
-    public Favorite(int id, String namaFilm, String rilisFilm, String deskripsiFilm, String gambarFilm) {
+    public FavoriteTvShows(int id, String namaFilm, String rilisFilm, String deskripsiFilm, String gambarFilm) {
         this.id = id;
         this.namaFilm = namaFilm;
         this.rilisFilm = rilisFilm;
@@ -30,11 +30,11 @@ public class Favorite implements Parcelable {
         this.gambarFilm = gambarFilm;
     }
 
-    public Favorite() {
+    public FavoriteTvShows() {
 
     }
 
-    protected Favorite(Parcel in) {
+    protected FavoriteTvShows(Parcel in) {
         id = in.readInt ();
         namaFilm = in.readString ();
         rilisFilm = in.readString ();

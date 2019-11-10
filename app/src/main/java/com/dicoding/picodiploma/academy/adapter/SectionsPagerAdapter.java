@@ -9,9 +9,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import com.dicoding.picodiploma.academy.FavFragment;
 import com.dicoding.picodiploma.academy.R;
-import com.dicoding.picodiploma.academy.TvFragment;
+import com.dicoding.picodiploma.academy.fragment.FavoriteFilmFragment;
+import com.dicoding.picodiploma.academy.fragment.FavoriteTvShowsFragment;
 
 public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
@@ -33,10 +33,10 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
         Fragment fragment = null;
         switch (position) {
             case 0:
-                fragment = new FavFragment ();
+                fragment = new FavoriteFilmFragment ();
                 break;
             case 1:
-                fragment = new TvFragment ();
+                fragment = new FavoriteTvShowsFragment ();
                 break;
         }
         return fragment;

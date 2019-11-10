@@ -20,7 +20,7 @@
         android:id="@+id/card_view_list_item_fav"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:listitem="@layout/card_view_favorite_layout" />
+        tools:listitem="@layout/card_view_favorite_film_layout" />
 
 
 </RelativeLayout>

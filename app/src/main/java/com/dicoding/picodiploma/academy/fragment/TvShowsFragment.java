@@ -11,6 +11,7 @@ import androidx.loader.content.Loader;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,8 @@ import com.dicoding.picodiploma.academy.adapter.TvShowsAdapter;
 import com.dicoding.picodiploma.academy.entity.TvShows;
 
 import java.util.ArrayList;
+
+import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public class TvShowsFragment extends Fragment implements LoaderManager.LoaderCallbacks<ArrayList<TvShows>> {
 
@@ -58,18 +61,18 @@ public class TvShowsFragment extends Fragment implements LoaderManager.LoaderCal
         Bundle bundle = new Bundle ();
 
         getLoaderManager ().initLoader ( 0, bundle, this );
-        showLoading ( true );
     }
 
     @Override
     public Loader<ArrayList<TvShows>> onCreateLoader(int id, Bundle args) {
+
         return new TvShowsAsyncTaskLoader ( getActivity (), "" );
     }
 
     @Override
     public void onLoadFinished(@NonNull Loader<ArrayList<TvShows>> loader, ArrayList<TvShows> data) {
         adapter.setData ( data );
-        showLoading ( false );
+
     }
 
 

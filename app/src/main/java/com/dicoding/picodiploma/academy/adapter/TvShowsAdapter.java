@@ -2,6 +2,7 @@ package com.dicoding.picodiploma.academy.adapter;
 
 import android.content.ContentValues;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,24 +16,27 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.dicoding.picodiploma.academy.R;
 import com.dicoding.picodiploma.academy.TvShowsDetailActivity;
-import com.dicoding.picodiploma.academy.db.FavoriteHelper;
-import com.dicoding.picodiploma.academy.entity.Movies;
+import com.dicoding.picodiploma.academy.db.FavoriteTvShowsHelper;
 import com.dicoding.picodiploma.academy.entity.TvShows;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-import static com.dicoding.picodiploma.academy.db.DatabaseContract.MoviesColumn.DESKRIPSI_FILM;
-import static com.dicoding.picodiploma.academy.db.DatabaseContract.MoviesColumn.GAMBAR_FILM;
-import static com.dicoding.picodiploma.academy.db.DatabaseContract.MoviesColumn.JUDUL_FILM;
-import static com.dicoding.picodiploma.academy.db.DatabaseContract.MoviesColumn.RILIS_FILM;
+import static androidx.constraintlayout.widget.Constraints.TAG;
+
+import static com.dicoding.picodiploma.academy.db.DatabaseContractTvShows.MoviesColumn._ID;
+import static com.dicoding.picodiploma.academy.db.DatabaseContractTvShows.MoviesColumn.DESKRIPSI_FILM;
+import static com.dicoding.picodiploma.academy.db.DatabaseContractTvShows.MoviesColumn.GAMBAR_FILM;
+import static com.dicoding.picodiploma.academy.db.DatabaseContractTvShows.MoviesColumn.JUDUL_FILM;
+import static com.dicoding.picodiploma.academy.db.DatabaseContractTvShows.MoviesColumn.RILIS_FILM;
 
 public class TvShowsAdapter extends RecyclerView.Adapter<TvShowsAdapter.GridViewHolder> {
 
     public final TvShows tvShows = new TvShows ();
     private ArrayList<TvShows> listTvShows = new ArrayList<> ();
     private String judulFilm, rilisFilm, deskripsiFilm, gambarFilm;
-    private FavoriteHelper favoriteHelper;
+    private FavoriteTvShowsHelper favoriteTvshowsHelper;
+    private int idFilm;
 
     public TvShowsAdapter() {
 
@@ -54,7 +58,8 @@ public class TvShowsAdapter extends RecyclerView.Adapter<TvShowsAdapter.GridView
     @Override
     public void onBindViewHolder(@NonNull final GridViewHolder GridViewHolder, int position) {
         String temp = listTvShows.get ( position ).getGambarFilm ();
-        favoriteHelper = FavoriteHelper.getInstance ( null );
+        favoriteTvshowsHelper = FavoriteTvShowsHelper.getInstance ( null );
+
         String url = "https://image.tmdb.org/t/p/w185" + temp;
 
         GridViewHolder.tvJudul.setText ( listTvShows.get ( position ).getNamaFilm () );
@@ -86,12 +91,14 @@ public class TvShowsAdapter extends RecyclerView.Adapter<TvShowsAdapter.GridView
                 ambildata ( cv );
 
                 ContentValues values = new ContentValues ();
+
+                values.put ( _ID, idFilm );
                 values.put ( JUDUL_FILM, judulFilm );
                 values.put ( DESKRIPSI_FILM, deskripsiFilm );
                 values.put ( RILIS_FILM, rilisFilm );
                 values.put ( GAMBAR_FILM, gambarFilm );
 
-                long result = favoriteHelper.insert ( values );
+                favoriteTvshowsHelper.insert ( values );
             }
         } );
 
@@ -104,21 +111,17 @@ public class TvShowsAdapter extends RecyclerView.Adapter<TvShowsAdapter.GridView
 
     public void ambildata(int cv) {
 
+        tvShows.setIdFilm ( listTvShows.get ( cv ).getIdFilm () );
         tvShows.setNamaFilm ( listTvShows.get ( cv ).getNamaFilm () );
         tvShows.setDeskripsiFilm ( listTvShows.get ( cv ).getDeskripsiFilm () );
         tvShows.setRilisFilm ( listTvShows.get ( cv ).getRilisFilm () );
         tvShows.setGambarFilm ( listTvShows.get ( cv ).getGambarFilm () );
 
+        idFilm = tvShows.getIdFilm ();
         judulFilm = tvShows.getNamaFilm ();
         rilisFilm = tvShows.getRilisFilm ();
         deskripsiFilm = tvShows.getDeskripsiFilm ();
         gambarFilm = tvShows.getGambarFilm ();
-
-//        Log.e ( TAG, "ambildata: "+judulFilm  );
-//        Log.e ( TAG, "ambildata: "+rilisFilm  );
-//        Log.e ( TAG, "ambildata: "+deskripsiFilm  );
-//        Log.e ( TAG, "ambildata: "+gambarFilm  );
-
     }
 
     public class GridViewHolder extends RecyclerView.ViewHolder {

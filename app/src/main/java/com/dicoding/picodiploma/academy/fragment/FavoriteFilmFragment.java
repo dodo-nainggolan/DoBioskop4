@@ -1,6 +1,5 @@
 package com.dicoding.picodiploma.academy.fragment;
 
-import android.accounts.OnAccountsUpdateListener;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -18,12 +17,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import com.dicoding.picodiploma.academy.R;
-import com.dicoding.picodiploma.academy.adapter.FavoriteAdapter;
-import com.dicoding.picodiploma.academy.db.FavoriteHelper;
-import com.dicoding.picodiploma.academy.entity.Favorite;
+import com.dicoding.picodiploma.academy.adapter.FavoriteFilmAdapter;
+import com.dicoding.picodiploma.academy.db.FavoriteFilmHelper;
+import com.dicoding.picodiploma.academy.entity.FavoriteFilm;
 import com.dicoding.picodiploma.academy.entity.Movies;
 import com.dicoding.picodiploma.academy.helper.MappingHelper;
 
@@ -35,25 +34,25 @@ import static androidx.constraintlayout.widget.Constraints.TAG;
 interface LoadNotesCallback {
     void preExecute();
 
-    void postExecute(ArrayList<Favorite> favorites);
+    void postExecute(ArrayList<FavoriteFilm> favoriteFilms);
 }
 
-public class FavoriteFragment extends Fragment implements LoadNotesCallback, LoaderManager.LoaderCallbacks<ArrayList<Movies>> {
+public class FavoriteFilmFragment extends Fragment implements LoadNotesCallback, LoaderManager.LoaderCallbacks<ArrayList<Movies>> {
 
     private static final String EXTRA_STATE = "EXTRA_STATE";
-    private FavoriteAdapter adapter;
+    private FavoriteFilmAdapter adapter;
     private RecyclerView rv;
     private ProgressBar progressBar;
-    private FavoriteHelper favoriteHelper;
+    private FavoriteFilmHelper favoriteFilmHelper;
 
-    public FavoriteFragment() {
+    public FavoriteFilmFragment() {
         // Required empty public constructor
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate ( R.layout.fragment_favorite, container, false );
+        View v = inflater.inflate ( R.layout.fragment_favorite_film, container, false );
         return v;
     }
 
@@ -61,22 +60,20 @@ public class FavoriteFragment extends Fragment implements LoadNotesCallback, Loa
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated ( view, savedInstanceState );
 
-        adapter = new FavoriteAdapter ();
+        adapter = new FavoriteFilmAdapter ();
         adapter.notifyDataSetChanged ();
 
         rv = view.findViewById ( R.id.card_view_list_item_fav );
         progressBar = view.findViewById ( R.id.progressBar );
 
-        showLoading ( true );
-
         rv.setLayoutManager ( new LinearLayoutManager ( getContext () ) );
         rv.setAdapter ( adapter );
 
-        favoriteHelper = FavoriteHelper.getInstance ( getContext () );
-        favoriteHelper.open ();
+        favoriteFilmHelper = FavoriteFilmHelper.getInstance ( getContext () );
+        favoriteFilmHelper.open ();
 
-        new LoadNotesAsync ( favoriteHelper, this ).execute ();
-
+        new LoadNotesAsync ( favoriteFilmHelper, this ).execute ();
+        showLoading ( true );
 
     }
 
@@ -85,9 +82,9 @@ public class FavoriteFragment extends Fragment implements LoadNotesCallback, Loa
     }
 
     @Override
-    public void postExecute(ArrayList<Favorite> favorite) {
-        Log.e ( "MainActivity", "postExecute: " + favorite );
-        adapter.setListNotes ( favorite );
+    public void postExecute(ArrayList<FavoriteFilm> favoriteFilm) {
+        adapter.setListNotes ( favoriteFilm );
+        showLoading ( false );
     }
 
     @Override
@@ -103,7 +100,6 @@ public class FavoriteFragment extends Fragment implements LoadNotesCallback, Loa
 
     @Override
     public void onLoadFinished(@NonNull Loader<ArrayList<Movies>> loader, ArrayList<Movies> data) {
-        showLoading ( false );
     }
 
     @Override
@@ -119,12 +115,12 @@ public class FavoriteFragment extends Fragment implements LoadNotesCallback, Loa
         }
     }
 
-    private static class LoadNotesAsync extends AsyncTask<Void, Void, ArrayList<Favorite>> {
+    private static class LoadNotesAsync extends AsyncTask<Void, Void, ArrayList<FavoriteFilm>> {
 
-        private final WeakReference<FavoriteHelper> weakFavHelper;
+        private final WeakReference<FavoriteFilmHelper> weakFavHelper;
         private final WeakReference<LoadNotesCallback> weakCallback;
 
-        private LoadNotesAsync(FavoriteHelper noteHelper, LoadNotesCallback callback) {
+        private LoadNotesAsync(FavoriteFilmHelper noteHelper, LoadNotesCallback callback) {
             weakFavHelper = new WeakReference<> ( noteHelper );
             weakCallback = new WeakReference<> ( callback );
         }
@@ -136,16 +132,15 @@ public class FavoriteFragment extends Fragment implements LoadNotesCallback, Loa
         }
 
         @Override
-        protected ArrayList<Favorite> doInBackground(Void... voids) {
+        protected ArrayList<FavoriteFilm> doInBackground(Void... voids) {
             Cursor dataCursor = weakFavHelper.get ().queryAll ();
-            Log.e ( TAG, "doInBackground: " + dataCursor );
             return MappingHelper.mapCursorToArrayList ( dataCursor );
         }
 
         @Override
-        protected void onPostExecute(ArrayList<Favorite> favorites) {
-            super.onPostExecute ( favorites );
-            weakCallback.get ().postExecute ( favorites );
+        protected void onPostExecute(ArrayList<FavoriteFilm> favoriteFilms) {
+            super.onPostExecute ( favoriteFilms );
+            weakCallback.get ().postExecute ( favoriteFilms );
 
         }
     }

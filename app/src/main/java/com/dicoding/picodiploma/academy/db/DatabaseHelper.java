@@ -8,17 +8,30 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final int DATABASE_VERSION = 1;
     private static final String SQL_CREATE_TABLE_NOTE = String.format ( "CREATE TABLE %s"
-                    + " (%s INTEGER PRIMARY KEY AUTOINCREMENT," +
+                    + " (%s INTEGER PRIMARY KEY," +
                     " %s TEXT NOT NULL," +
                     " %s TEXT NOT NULL," +
                     " %s TEXT NOT NULL," +
                     " %s TEXT NOT NULL)",
-            DatabaseContract.TABLE_NAME,
-            DatabaseContract.MoviesColumn._ID,
-            DatabaseContract.MoviesColumn.JUDUL_FILM,
-            DatabaseContract.MoviesColumn.DESKRIPSI_FILM,
-            DatabaseContract.MoviesColumn.RILIS_FILM,
-            DatabaseContract.MoviesColumn.GAMBAR_FILM
+            DatabaseContractFilm.TABLE_NAME,
+            DatabaseContractFilm.MoviesColumn._ID,
+            DatabaseContractFilm.MoviesColumn.JUDUL_FILM,
+            DatabaseContractFilm.MoviesColumn.DESKRIPSI_FILM,
+            DatabaseContractFilm.MoviesColumn.RILIS_FILM,
+            DatabaseContractFilm.MoviesColumn.GAMBAR_FILM
+    );
+    private static final String SQL_CREATE_TABLE_TVSHOW = String.format ( "CREATE TABLE %s"
+                    + " (%s INTEGER PRIMARY KEY," +
+                    " %s TEXT NOT NULL," +
+                    " %s TEXT NOT NULL," +
+                    " %s TEXT NOT NULL," +
+                    " %s TEXT NOT NULL)",
+            DatabaseContractTvShows.TABLE_NAME,
+            DatabaseContractTvShows.MoviesColumn._ID,
+            DatabaseContractTvShows.MoviesColumn.JUDUL_FILM,
+            DatabaseContractTvShows.MoviesColumn.DESKRIPSI_FILM,
+            DatabaseContractTvShows.MoviesColumn.RILIS_FILM,
+            DatabaseContractTvShows.MoviesColumn.GAMBAR_FILM
     );
     public static String DATABASE_NAME = "dbmoviesapp";
 
@@ -29,11 +42,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL ( SQL_CREATE_TABLE_NOTE );
+        db.execSQL ( SQL_CREATE_TABLE_TVSHOW );
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL ( "DROP TABLE IF EXISTS " + DatabaseContract.TABLE_NAME );
+        db.execSQL ( "DROP TABLE IF EXISTS " + DatabaseContractFilm.TABLE_NAME );
+        db.execSQL ( "DROP TABLE IF EXISTS " + DatabaseContractTvShows.TABLE_NAME );
         onCreate ( db );
     }
 }

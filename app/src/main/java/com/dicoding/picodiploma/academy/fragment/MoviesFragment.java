@@ -60,20 +60,19 @@ public class MoviesFragment extends Fragment implements LoaderManager.LoaderCall
 
         Bundle bundle = new Bundle ();
         getLoaderManager ().initLoader ( 0, bundle, this );
-        showLoading ( true );
 
     }
 
     @Override
     public Loader<ArrayList<Movies>> onCreateLoader(int id, Bundle args) {
+        showLoading ( true );
         return new MoviesAsyncTaskLoader ( getActivity (), "" );
     }
 
     @Override
     public void onLoadFinished(@NonNull Loader<ArrayList<Movies>> loader, ArrayList<Movies> data) {
-
-        adapter.setData ( data );
         showLoading ( false );
+        adapter.setData ( data );
     }
 
     @Override
