@@ -9,4 +9,8 @@
     <string name="change_language_settings">Ubah Bahasa</string>
     <string name="favorite_dashboard">FAVORITE</string>
     <string name="btn_remove">REMOVE</string>
+    <string name="tab_text_1">FILM</string>
+    <string name="tab_text_2">FAVORITE</string>
+    <string name="content_tab_home">INI TAB FAVORITE</string>
+    <string name="content_tab_tv">INI TAB TVSHOW</string>
 </resources>

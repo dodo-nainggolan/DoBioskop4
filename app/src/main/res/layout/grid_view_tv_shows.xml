@@ -9,18 +9,26 @@
     android:padding="4dp">
 
     <ImageView
-        android:src="@drawable/frame"
         android:id="@+id/foto_film"
         android:layout_width="match_parent"
         android:layout_height="250dp"
         android:scaleType="centerCrop"
+        android:src="@drawable/frame"
         tools:src="@color/colorAccent" />
+
+    <Button
+        android:id="@+id/btn_fav_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/foto_film"
+        android:layout_centerHorizontal="true"
+        android:text="@string/btn_fav" />
 
     <TextView
         android:id="@+id/judul_film"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/foto_film"
+        android:layout_below="@+id/btn_fav_tv"
         android:text="@string/judul_film"
         android:textAlignment="center"
         android:textSize="16dp" />

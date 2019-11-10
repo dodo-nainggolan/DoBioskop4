@@ -1,5 +1,6 @@
 package com.dicoding.picodiploma.academy.fragment;
 
+import android.accounts.OnAccountsUpdateListener;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -7,6 +8,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.loader.app.LoaderManager;
+import androidx.loader.content.Loader;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -21,6 +24,7 @@ import com.dicoding.picodiploma.academy.R;
 import com.dicoding.picodiploma.academy.adapter.FavoriteAdapter;
 import com.dicoding.picodiploma.academy.db.FavoriteHelper;
 import com.dicoding.picodiploma.academy.entity.Favorite;
+import com.dicoding.picodiploma.academy.entity.Movies;
 import com.dicoding.picodiploma.academy.helper.MappingHelper;
 
 import java.lang.ref.WeakReference;
@@ -34,14 +38,13 @@ interface LoadNotesCallback {
     void postExecute(ArrayList<Favorite> favorites);
 }
 
-public class FavoriteFragment extends Fragment implements LoadNotesCallback {
+public class FavoriteFragment extends Fragment implements LoadNotesCallback, LoaderManager.LoaderCallbacks<ArrayList<Movies>> {
 
     private static final String EXTRA_STATE = "EXTRA_STATE";
     private FavoriteAdapter adapter;
     private RecyclerView rv;
     private ProgressBar progressBar;
     private FavoriteHelper favoriteHelper;
-    private TextView namaFilm;
 
     public FavoriteFragment() {
         // Required empty public constructor
@@ -64,6 +67,8 @@ public class FavoriteFragment extends Fragment implements LoadNotesCallback {
         rv = view.findViewById ( R.id.card_view_list_item_fav );
         progressBar = view.findViewById ( R.id.progressBar );
 
+        showLoading ( true );
+
         rv.setLayoutManager ( new LinearLayoutManager ( getContext () ) );
         rv.setAdapter ( adapter );
 
@@ -71,6 +76,7 @@ public class FavoriteFragment extends Fragment implements LoadNotesCallback {
         favoriteHelper.open ();
 
         new LoadNotesAsync ( favoriteHelper, this ).execute ();
+
 
     }
 
@@ -80,7 +86,7 @@ public class FavoriteFragment extends Fragment implements LoadNotesCallback {
 
     @Override
     public void postExecute(ArrayList<Favorite> favorite) {
-        Log.e ( "MainActivity", "postExecute: "+favorite  );
+        Log.e ( "MainActivity", "postExecute: " + favorite );
         adapter.setListNotes ( favorite );
     }
 
@@ -88,6 +94,29 @@ public class FavoriteFragment extends Fragment implements LoadNotesCallback {
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState ( outState );
         outState.putParcelableArrayList ( EXTRA_STATE, adapter.getListNotes () );
+    }
+
+    @Override
+    public Loader<ArrayList<Movies>> onCreateLoader(int id, Bundle args) {
+        return new MoviesAsyncTaskLoader ( getActivity (), "" );
+    }
+
+    @Override
+    public void onLoadFinished(@NonNull Loader<ArrayList<Movies>> loader, ArrayList<Movies> data) {
+        showLoading ( false );
+    }
+
+    @Override
+    public void onLoaderReset(@NonNull Loader<ArrayList<Movies>> loader) {
+
+    }
+
+    private void showLoading(Boolean state) {
+        if (state) {
+            progressBar.setVisibility ( View.VISIBLE );
+        } else {
+            progressBar.setVisibility ( View.GONE );
+        }
     }
 
     private static class LoadNotesAsync extends AsyncTask<Void, Void, ArrayList<Favorite>> {
@@ -116,7 +145,6 @@ public class FavoriteFragment extends Fragment implements LoadNotesCallback {
         @Override
         protected void onPostExecute(ArrayList<Favorite> favorites) {
             super.onPostExecute ( favorites );
-
             weakCallback.get ().postExecute ( favorites );
 
         }

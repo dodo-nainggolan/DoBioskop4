@@ -87,7 +87,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.CardViewVi
 
             @Override
             public void onClick(View v) {
-                Toast.makeText ( CardViewViewHolder.btnFav.getContext (), "tombol berhasil ditekan", Toast.LENGTH_SHORT ).show ();
+                Toast.makeText ( CardViewViewHolder.btnFav.getContext (), "FAVORITE", Toast.LENGTH_SHORT ).show ();
                 int cv = CardViewViewHolder.getPosition ();
                 ambildata ( cv );
 

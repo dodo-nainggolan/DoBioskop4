@@ -11,7 +11,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.dicoding.picodiploma.academy.db.FavoriteHelper;
-import com.dicoding.picodiploma.academy.fragment.FavoriteFragment;
 import com.dicoding.picodiploma.academy.fragment.MoviesFragment;
 import com.dicoding.picodiploma.academy.fragment.TvShowsFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -54,12 +53,15 @@ public class MainActivity extends AppCompatActivity {
 
                 case R.id.favorite_dashboard:
 
-                    title = "MY FAVORITE";
-                    setTitle ( title );
-                    fragment = new FavoriteFragment ();
-                    getSupportFragmentManager ().beginTransaction ()
-                            .replace ( R.id.container_layout, fragment, fragment.getClass ().getSimpleName () )
-                            .commit ();
+                    Intent favActivity = new Intent ( MainActivity.this, MyTabLayout.class );
+                    startActivity (favActivity);
+
+//                    title = "MY FAVORITE";
+//                    setTitle ( title );
+//                    fragment = new FavoriteFragment ();
+//                    getSupportFragmentManager ().beginTransaction ()
+//                            .replace ( R.id.container_layout, fragment, fragment.getClass ().getSimpleName () )
+//                            .commit ();
 
                     return true;
             }
@@ -71,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate ( savedInstanceState );
         setContentView ( R.layout.activity_main );
+
         BottomNavigationView navView = findViewById ( R.id.navigation );
         navView.setOnNavigationItemSelectedListener ( mOnNavigationItemSelectedListener );
 
@@ -80,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
 
         favoriteHelper = FavoriteHelper.getInstance ( getApplicationContext () );
         favoriteHelper.open ();
+
 
     }
 

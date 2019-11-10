@@ -1,6 +1,8 @@
 package com.dicoding.picodiploma.academy.adapter;
 
+import android.app.FragmentTransaction;
 import android.content.ContentValues;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,13 +10,15 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.dicoding.picodiploma.academy.FavoriteDetailActivity;
+import com.dicoding.picodiploma.academy.MoviesDetailActivity;
 import com.dicoding.picodiploma.academy.R;
 import com.dicoding.picodiploma.academy.entity.Favorite;
-import com.dicoding.picodiploma.academy.entity.Movies;
 import com.dicoding.picodiploma.academy.db.FavoriteHelper;
 import com.squareup.picasso.Picasso;
 
@@ -48,6 +52,7 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.CardVi
         notifyDataSetChanged ();
     }
 
+
     @NonNull
     @Override
     public CardViewViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
@@ -56,8 +61,8 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.CardVi
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CardViewViewHolder holder, int position) {
-
+    public void onBindViewHolder(@NonNull final CardViewViewHolder holder, final int position) {
+        favoriteHelper = FavoriteHelper.getInstance ( null );
         String temp = listFav.get ( position ).getGambarFilm ();
         String url = "https://image.tmdb.org/t/p/w185" + temp;
 
@@ -66,12 +71,33 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.CardVi
         holder.tvDeskripsi.setText ( listFav.get ( position ).getDeskripsiFilm () );
 
         Picasso.get ().load ( url ).into ( holder.gambarFilm );
-    }
 
-    @Override
-    public int getItemCount() {
-        Log.e ( "NoteAdapter", "getItemCount: " + listFav.size () );
-        return listFav.size ();
+        holder.btnRemove.setOnClickListener ( new View.OnClickListener () {
+            @Override
+            public void onClick(View v) {
+                Log.e ( TAG, "onClick: " + listFav.get ( position ).getId () );
+                favoriteHelper.deleteById ( String.valueOf ( listFav.get ( position ).getId () ) );
+                Toast.makeText ( holder.itemView.getContext (), "Berhasil menghapus data", Toast.LENGTH_SHORT ).show ();
+                listFav.remove ( position );
+                notifyDataSetChanged ();
+            }
+        } );
+
+        holder.itemView.setOnClickListener ( new View.OnClickListener () {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText ( holder.itemView.getContext (), "Kamu memilih " +
+                        listFav.get ( holder.getAdapterPosition () ).getNamaFilm (), Toast.LENGTH_SHORT ).show ();
+
+                int cv = holder.getPosition ();
+                ambildata ( cv );
+
+                Intent intent = new Intent ( v.getContext (), FavoriteDetailActivity.class );
+                intent.putExtra ( "myData", fav );
+                v.getContext ().startActivity ( intent );
+
+            }
+        } );
     }
 
     public void ambildata(int cv) {
@@ -86,16 +112,19 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.CardVi
         deskripsiFilm = fav.getDeskripsiFilm ();
         gambarFilm = fav.getGambarFilm ();
 
-//        Log.e ( TAG, "ambildata: "+judulFilm  );
-//        Log.e ( TAG, "ambildata: "+rilisFilm  );
-//        Log.e ( TAG, "ambildata: "+deskripsiFilm  );
-//        Log.e ( TAG, "ambildata: "+gambarFilm  );
-
     }
+
+    @Override
+    public int getItemCount() {
+        Log.e ( "NoteAdapter", "getItemCount: " + listFav.size () );
+        return listFav.size ();
+    }
+
 
     public class CardViewViewHolder extends RecyclerView.ViewHolder {
         final ImageView gambarFilm;
-        final TextView tvJudul, tvRilis, tvDeskripsi;
+        TextView tvJudul, tvRilis, tvDeskripsi;
+        Button btnRemove;
 
         CardViewViewHolder(View itemView) {
             super ( itemView );
@@ -103,6 +132,7 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.CardVi
             tvJudul = itemView.findViewById ( R.id.judul_film_fav );
             tvRilis = itemView.findViewById ( R.id.rilis_film_fav );
             tvDeskripsi = itemView.findViewById ( R.id.deskripsi_film_fav );
+            btnRemove = itemView.findViewById ( R.id.btn_remove_fav );
         }
     }
 }
