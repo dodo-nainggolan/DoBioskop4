@@ -73,7 +73,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.CardViewVi
                 Toast.makeText ( CardViewViewHolder.itemView.getContext (), "Kamu memilih " +
                         listMovies.get ( CardViewViewHolder.getAdapterPosition () ).getNamaFilm (), Toast.LENGTH_SHORT ).show ();
 
-                int cv = CardViewViewHolder.getPosition ();
+                int cv = CardViewViewHolder.getAdapterPosition ();
                 ambildata ( cv );
 
                 Intent intent = new Intent ( v.getContext (), MoviesDetailActivity.class );
@@ -88,7 +88,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.CardViewVi
             @Override
             public void onClick(View v) {
                 Toast.makeText ( CardViewViewHolder.btnFav.getContext (), "FAVORITE", Toast.LENGTH_SHORT ).show ();
-                int cv = CardViewViewHolder.getPosition ();
+                int cv = CardViewViewHolder.getAdapterPosition ();
                 ambildata ( cv );
 
                 ContentValues values = new ContentValues ();
@@ -110,7 +110,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.CardViewVi
         return listMovies.size ();
     }
 
-    public void ambildata(int cv) {
+    private void ambildata(int cv) {
 
         movies.setId ( listMovies.get ( cv ).getId () );
         movies.setNamaFilm ( listMovies.get ( cv ).getNamaFilm () );
@@ -128,8 +128,8 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.CardViewVi
     }
 
     public class CardViewViewHolder extends RecyclerView.ViewHolder {
-        public ImageView Gambar;
-        public Button btnFav;
+        private ImageView Gambar;
+        private Button btnFav;
         TextView tvJudul, tvRilis, tvDeskripsi;
 
         CardViewViewHolder(View itemView) {

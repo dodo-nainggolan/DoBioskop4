@@ -65,12 +65,13 @@ public class TvShowsFragment extends Fragment implements LoaderManager.LoaderCal
 
     @Override
     public Loader<ArrayList<TvShows>> onCreateLoader(int id, Bundle args) {
-
+        showLoading ( true );
         return new TvShowsAsyncTaskLoader ( getActivity (), "" );
     }
 
     @Override
     public void onLoadFinished(@NonNull Loader<ArrayList<TvShows>> loader, ArrayList<TvShows> data) {
+        showLoading ( false );
         adapter.setData ( data );
 
     }

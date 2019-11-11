@@ -85,7 +85,7 @@ public class FavoriteTvShowsAdapter extends RecyclerView.Adapter<FavoriteTvShows
                 Toast.makeText ( holder.itemView.getContext (), "Kamu memilih " +
                         listFav.get ( holder.getAdapterPosition () ).getNamaFilm (), Toast.LENGTH_SHORT ).show ();
 
-                int cv = holder.getPosition ();
+                int cv = holder.getAdapterPosition ();
                 ambildata ( cv );
 
                 Intent intent = new Intent ( v.getContext (), FavoriteTvShowsDetailActivity.class );
@@ -96,7 +96,7 @@ public class FavoriteTvShowsAdapter extends RecyclerView.Adapter<FavoriteTvShows
         } );
     }
 
-    public void ambildata(int cv) {
+    private void ambildata(int cv) {
 
         fav.setId ( listFav.get ( cv ).getId () );
         fav.setNamaFilm ( listFav.get ( cv ).getNamaFilm () );
@@ -119,7 +119,7 @@ public class FavoriteTvShowsAdapter extends RecyclerView.Adapter<FavoriteTvShows
 
 
     public class CardViewViewHolder extends RecyclerView.ViewHolder {
-        final ImageView gambarFilm;
+        private ImageView gambarFilm;
         TextView tvJudul, tvRilis, tvDeskripsi;
         Button btnRemove;
 
