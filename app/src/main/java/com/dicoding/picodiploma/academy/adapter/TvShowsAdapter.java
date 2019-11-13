@@ -85,7 +85,7 @@ public class TvShowsAdapter extends RecyclerView.Adapter<TvShowsAdapter.GridView
             public void onClick(View v) {
                 Toast.makeText ( GridViewHolder.btnFav.getContext (), "FAVORITE", Toast.LENGTH_SHORT ).show ();
 
-                int cv = GridViewHolder.getPosition ();
+                int cv = GridViewHolder.getAdapterPosition ();
                 ambildata ( cv );
 
                 ContentValues values = new ContentValues ();
@@ -107,7 +107,7 @@ public class TvShowsAdapter extends RecyclerView.Adapter<TvShowsAdapter.GridView
         return listTvShows.size ();
     }
 
-    public void ambildata(int cv) {
+    private void ambildata(int cv) {
 
         tvShows.setIdFilm ( listTvShows.get ( cv ).getIdFilm () );
         tvShows.setNamaFilm ( listTvShows.get ( cv ).getNamaFilm () );
@@ -123,8 +123,8 @@ public class TvShowsAdapter extends RecyclerView.Adapter<TvShowsAdapter.GridView
     }
 
     public class GridViewHolder extends RecyclerView.ViewHolder {
-        public ImageView Gambar;
-        public Button btnFav;
+        private ImageView Gambar;
+        private Button btnFav;
         TextView tvJudul, tvRilis, tvDeskripsi;
 
         GridViewHolder(View itemView) {

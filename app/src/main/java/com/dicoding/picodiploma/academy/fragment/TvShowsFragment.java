@@ -71,6 +71,7 @@ public class TvShowsFragment extends Fragment implements LoaderManager.LoaderCal
 
     @Override
     public void onLoadFinished(@NonNull Loader<ArrayList<TvShows>> loader, ArrayList<TvShows> data) {
+        showLoading ( false );
         adapter.setData ( data );
         showLoading ( false );
 
