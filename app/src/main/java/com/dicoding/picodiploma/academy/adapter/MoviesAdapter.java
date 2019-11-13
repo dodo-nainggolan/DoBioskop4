@@ -2,6 +2,7 @@ package com.dicoding.picodiploma.academy.adapter;
 
 import android.content.ContentValues;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
+import static androidx.constraintlayout.widget.Constraints.TAG;
 import static com.dicoding.picodiploma.academy.db.DatabaseContractFilm.MoviesColumn.DESKRIPSI_FILM;
 import static com.dicoding.picodiploma.academy.db.DatabaseContractFilm.MoviesColumn.GAMBAR_FILM;
 import static com.dicoding.picodiploma.academy.db.DatabaseContractFilm.MoviesColumn._ID;
@@ -41,6 +43,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.CardViewVi
     }
 
     public void setData(ArrayList<Movies> items) {
+
         listMovies.clear ();
         listMovies.addAll ( items );
         notifyDataSetChanged ();

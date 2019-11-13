@@ -15,4 +15,9 @@
     <string name="tab_text_1">FILM</string>
     <string name="tab_text_2">TV SHOWS</string>
     <string name="content_tab_tv">INI TAB TVSHOW</string>
+    <string name="search">Search ...</string>
+    <string name="search_hint">Search Something Here</string>
+    <string name="add_widget">Add widget</string>
+    <string name="appwidget_text">MOVIES BANNER</string>
+    <string name="empty_text">NO DATA</string>
 </resources>

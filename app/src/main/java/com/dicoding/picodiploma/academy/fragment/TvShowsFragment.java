@@ -65,13 +65,14 @@ public class TvShowsFragment extends Fragment implements LoaderManager.LoaderCal
 
     @Override
     public Loader<ArrayList<TvShows>> onCreateLoader(int id, Bundle args) {
-
+        showLoading ( true );
         return new TvShowsAsyncTaskLoader ( getActivity (), "" );
     }
 
     @Override
     public void onLoadFinished(@NonNull Loader<ArrayList<TvShows>> loader, ArrayList<TvShows> data) {
         adapter.setData ( data );
+        showLoading ( false );
 
     }
 
@@ -81,6 +82,7 @@ public class TvShowsFragment extends Fragment implements LoaderManager.LoaderCal
 //TODO optimize dirty trick
 //         adapter.setData ( null );
     }
+
     private void showLoading(Boolean state) {
         if (state) {
             progressBar.setVisibility ( View.VISIBLE );

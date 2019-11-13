@@ -22,8 +22,6 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-import static androidx.constraintlayout.widget.Constraints.TAG;
-
 import static com.dicoding.picodiploma.academy.db.DatabaseContractTvShows.MoviesColumn._ID;
 import static com.dicoding.picodiploma.academy.db.DatabaseContractTvShows.MoviesColumn.DESKRIPSI_FILM;
 import static com.dicoding.picodiploma.academy.db.DatabaseContractTvShows.MoviesColumn.GAMBAR_FILM;
